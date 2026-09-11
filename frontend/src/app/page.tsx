@@ -120,8 +120,68 @@ const AGENTS = [
 ];
 
 export default function PublicLandingPage() {
+  const [isPlayingIntro, setIsPlayingIntro] = React.useState(true);
+
   return (
     <div className="min-h-screen text-[#1E2333] relative overflow-hidden" style={{ backgroundColor: '#F7F9FC', fontFamily: 'var(--font-sans)' }}>
+      {/* Intro Video Fullscreen Overlay */}
+      {isPlayingIntro && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 9999,
+          backgroundColor: '#0F172A',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden'
+        }}>
+          <video
+            autoPlay
+            muted
+            playsInline
+            onEnded={() => setIsPlayingIntro(false)}
+            style={{
+              width: '100vw',
+              height: '100vh',
+              objectFit: 'contain'
+            }}
+          >
+            <source src="/intro_video.webm" type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+
+          {/* Skip Intro Button Overlay */}
+          <button
+            onClick={() => setIsPlayingIntro(false)}
+            style={{
+              position: 'absolute',
+              bottom: '32px',
+              right: '32px',
+              zIndex: 10000,
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(10px)',
+              color: '#FFFFFF',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              padding: '10px 20px',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <span>Skip Intro</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       {/* Multi-Point Ambient Light Pastel Background Glows */}
       <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(167,139,250,0.18)_0%,transparent_70%)] blur-3xl pointer-events-none" />
       <div className="absolute top-10 right-0 w-[650px] h-[650px] rounded-full bg-[radial-gradient(circle,rgba(79,172,254,0.18)_0%,transparent_70%)] blur-3xl pointer-events-none" />
@@ -140,12 +200,12 @@ export default function PublicLandingPage() {
       {/* Top Header */}
       <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-[#E8ECF3] shadow-xs">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
-          {/* Vignan's University Official Branding Logo */}
-          <div className="flex items-center">
+          {/* Top Left Vignan's University Logo Screenshot */}
+          <div className="flex items-center justify-start">
             <img
-              src="/vignan.png"
+              src="/logo.png"
               alt="Vignan's Foundation for Science, Technology and Research"
-              className="h-10 sm:h-12 md:h-14 w-auto object-contain max-w-[280px] sm:max-w-[360px] md:max-w-[460px]"
+              className="h-11 sm:h-13 md:h-15 w-auto object-contain max-w-[280px] sm:max-w-[380px] md:max-w-[480px]"
             />
           </div>
 
