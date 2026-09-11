@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import Navbar from './Navbar';
+import VignanHeader from './VignanHeader';
 import Sidebar from './Sidebar';
 import { Role } from '@/types';
 
@@ -13,7 +13,6 @@ interface AppShellProps {
 export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   
-  // Determine default role based on path
   const [role, setRole] = useState<Role>('HOD');
 
   useEffect(() => {
@@ -24,14 +23,13 @@ export default function AppShell({ children }: AppShellProps) {
     }
   }, [pathname]);
 
-  // Hide Navbar/Sidebar on login page
   if (pathname === '/login') {
     return <main>{children}</main>;
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Navbar currentRole={role} onRoleChange={(r) => setRole(r)} />
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f8fafc' }}>
+      <VignanHeader currentRole={role} onRoleChange={(r) => setRole(r)} />
       <div style={{ display: 'flex', flex: 1 }}>
         <Sidebar currentRole={role} />
         <main style={{
