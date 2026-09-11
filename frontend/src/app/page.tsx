@@ -146,7 +146,7 @@ export default function PublicLandingPage() {
               <img
                 src="/vignan_logo.jpg"
                 alt="Vignan University"
-                className="h-9 w-auto object-contain"
+                className="h-11 w-auto object-contain"
               />
             </div>
             <div>
