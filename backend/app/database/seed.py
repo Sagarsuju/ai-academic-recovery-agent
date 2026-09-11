@@ -6,9 +6,20 @@ def seed_database():
     Base.metadata.create_all(bind=engine)
 
     # Path to schema.sql and seed_data.sql
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-    schema_path = os.path.join(project_root, "database", "schema.sql")
-    seed_path = os.path.join(project_root, "database", "seed_data.sql")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.path.abspath(os.path.join(current_dir, "..", "..", "database")),
+        os.path.abspath(os.path.join(current_dir, "..", "..", "..", "database")),
+        "/app/database"
+    ]
+    schema_path = ""
+    seed_path = ""
+    for c in candidates:
+        cand_schema = os.path.join(c, "schema.sql")
+        if os.path.exists(cand_schema):
+            schema_path = cand_schema
+            seed_path = os.path.join(c, "seed_data.sql")
+            break
 
     with engine.connect() as conn:
         if os.path.exists(schema_path):
