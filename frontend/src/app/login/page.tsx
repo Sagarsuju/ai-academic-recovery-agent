@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ShieldAlert, UserCheck, Lock, Mail, ArrowRight, Sparkles, GraduationCap, Settings, Cpu } from 'lucide-react';
 import { Role } from '@/types';
+import RobotMascot from '@/components/ui/RobotMascot';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,6 +47,16 @@ export default function LoginPage() {
       padding: '24px',
       fontFamily: 'var(--font-sans)'
     }}>
+      {/* Top-Right Corner Animated 3D AI Robot Mascot */}
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        right: '24px',
+        zIndex: 30
+      }}>
+        <RobotMascot />
+      </div>
+
       {/* 4 Large Blurred Pastel Gradient Blobs */}
       {/* 1. Purple top-left */}
       <div style={{
