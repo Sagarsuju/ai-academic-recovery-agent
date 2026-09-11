@@ -37,6 +37,7 @@ RUN groupadd -g 10001 appgroup && \
 # Set environment defaults
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app \
     PORT=8000 \
     HOST=0.0.0.0 \
     CHROMA_PATH=/app/chroma_data
