@@ -47,16 +47,6 @@ export default function LoginPage() {
       padding: '24px',
       fontFamily: 'var(--font-sans)'
     }}>
-      {/* Top-Right Corner Animated 3D AI Robot Mascot */}
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        right: '24px',
-        zIndex: 30
-      }}>
-        <RobotMascot />
-      </div>
-
       {/* 4 Large Blurred Pastel Gradient Blobs */}
       {/* 1. Purple top-left */}
       <div style={{
