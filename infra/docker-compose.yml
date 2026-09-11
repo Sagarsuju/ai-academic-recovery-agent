@@ -40,7 +40,7 @@ services:
   # 3. External Mock Attendance Microservice
   mock_attendance_system:
     build:
-      context: ./backend
+      context: ../backend
       dockerfile: Dockerfile.mock
     container_name: academic_recovery_mock_attendance
     command: ["uvicorn", "mock_services.mock_attendance_system:app", "--host", "0.0.0.0", "--port", "9001"]
@@ -58,7 +58,7 @@ services:
   # 4. External Mock Lesson Plan Microservice
   mock_lesson_plan_system:
     build:
-      context: ./backend
+      context: ../backend
       dockerfile: Dockerfile.mock
     container_name: academic_recovery_mock_lesson_plan
     command: ["uvicorn", "mock_services.mock_lesson_plan_system:app", "--host", "0.0.0.0", "--port", "9002"]
@@ -76,7 +76,7 @@ services:
   # 5. FastAPI Backend Application
   backend:
     build:
-      context: ./backend
+      context: ../backend
       dockerfile: Dockerfile
     container_name: academic_recovery_backend
     restart: unless-stopped
@@ -114,7 +114,7 @@ services:
   # 6. Next.js Frontend Application
   frontend:
     build:
-      context: ./frontend
+      context: ../frontend
       dockerfile: Dockerfile
       args:
         - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8000}

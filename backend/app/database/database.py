@@ -6,6 +6,11 @@ from app.config.settings import settings
 
 # Determine database URL with canonical path for SQLite
 db_url = settings.DATABASE_URL
+
+# Auto-normalize legacy postgres:// prefix provided by cloud hosts like Render / Railway
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
 backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 default_sqlite_file = os.path.join(backend_dir, "academic_recovery.db")
 

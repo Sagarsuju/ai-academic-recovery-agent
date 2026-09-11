@@ -4,7 +4,8 @@ from chromadb.utils import embedding_functions
 
 # Define persistent storage path for ChromaDB
 RAG_DIR = os.path.dirname(os.path.abspath(__file__))
-CHROMA_DATA_DIR = os.path.join(RAG_DIR, "chroma_data")
+custom_chroma_path = os.getenv("CHROMA_PATH")
+CHROMA_DATA_DIR = os.path.abspath(custom_chroma_path) if custom_chroma_path else os.path.join(RAG_DIR, "chroma_data")
 os.makedirs(CHROMA_DATA_DIR, exist_ok=True)
 
 # Initialize SentenceTransformer offline embedding function (all-MiniLM-L6-v2)
