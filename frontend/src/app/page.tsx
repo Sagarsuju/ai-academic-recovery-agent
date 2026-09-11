@@ -140,26 +140,13 @@ export default function PublicLandingPage() {
       {/* Top Header */}
       <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-[#E8ECF3] shadow-xs">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
-          {/* Logo & University Name */}
-          <div className="flex items-center gap-3">
-            <div className="bg-white p-1.5 rounded-xl border border-[#E8ECF3] shadow-xs">
-              <img
-                src="/vignan_logo.jpg"
-                alt="Vignan University"
-                className="h-11 w-auto object-contain"
-              />
-            </div>
-            <div>
-              <span className="font-bold text-base tracking-tight text-[#1E2333] flex items-center gap-2" style={{ fontFamily: 'var(--font-heading)' }}>
-                Vignan Academic AI
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#F0EEFF] text-[#6C63FF] border border-[#E0DBFF]">
-                  R22 Ready
-                </span>
-              </span>
-              <p className="text-xs text-[#64748B]">
-                Department of Computer Science & Engineering
-              </p>
-            </div>
+          {/* Vignan's University Official Branding Logo */}
+          <div className="flex items-center">
+            <img
+              src="/vignans-university-logo.png"
+              alt="Vignan's Foundation for Science, Technology and Research"
+              className="h-10 sm:h-12 md:h-14 w-auto object-contain max-w-[280px] sm:max-w-[360px] md:max-w-[460px]"
+            />
           </div>
 
           {/* Nav & Login CTA */}
