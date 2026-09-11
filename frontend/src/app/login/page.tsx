@@ -130,23 +130,6 @@ export default function LoginPage() {
       >
         {/* Branding & Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{
-            background: '#FFFFFF',
-            borderRadius: '12px',
-            padding: '8px 18px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: '16px',
-            border: '1px solid var(--border-subtle)',
-            boxShadow: '0 2px 8px rgba(30, 35, 51, 0.04)'
-          }}>
-            <img 
-              src="/vignan_logo.jpg" 
-              alt="Vignan University Logo" 
-              style={{ maxHeight: '54px', width: 'auto', objectFit: 'contain' }}
-            />
-          </div>
 
           <h1 style={{
             fontFamily: 'var(--font-heading)',
@@ -372,21 +355,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Accreditation Badges Banner */}
-        <div style={{
-          marginTop: '24px',
-          background: '#FFFFFF',
-          padding: '10px 14px',
-          borderRadius: '10px',
-          border: '1px solid var(--border-subtle)',
-          boxShadow: '0 1px 3px rgba(30, 35, 51, 0.03)'
-        }}>
-          <img 
-            src="/accreditation_badges.jpg" 
-            alt="Vignan Accreditation Badges"
-            style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block' }}
-          />
-        </div>
+
 
         <div style={{
           marginTop: '16px',
