@@ -4,26 +4,46 @@ import React from 'react';
 
 export default function RobotMascot() {
   return (
-    <div className="relative pointer-events-none z-20 flex flex-col items-center">
+    <div style={{
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      zIndex: 50,
+      pointerEvents: 'none'
+    }}>
       {/* Speech Bubble */}
       <div 
         style={{
           animation: 'floatBubble 3.5s ease-in-out infinite alternate',
-          marginBottom: '10px'
+          marginBottom: '8px',
+          background: 'rgba(255, 255, 255, 0.98)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid #E0DBFF',
+          padding: '6px 14px',
+          borderRadius: '999px',
+          boxShadow: '0 4px 15px rgba(108, 99, 255, 0.15)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          fontSize: '0.78rem',
+          fontWeight: 800,
+          color: '#4C1D95',
+          pointerEvents: 'auto',
+          whiteSpace: 'nowrap'
         }}
-        className="bg-white/95 backdrop-blur-md border border-[#E0DBFF] px-3.5 py-1.5 rounded-2xl shadow-lg flex items-center gap-1.5 text-xs font-bold text-[#4C1D95] pointer-events-auto"
       >
         <span>Welcome Back!</span>
-        <span className="text-sm">👋</span>
+        <span style={{ fontSize: '0.9rem' }}>👋</span>
         {/* Tail indicator */}
         <div 
           style={{
             position: 'absolute',
-            bottom: '-6px',
+            bottom: '-5px',
             left: '50%',
             transform: 'translateX(-50%) rotate(45deg)',
-            width: '10px',
-            height: '10px',
+            width: '8px',
+            height: '8px',
             backgroundColor: '#FFFFFF',
             borderRight: '1px solid #E0DBFF',
             borderBottom: '1px solid #E0DBFF'
@@ -34,19 +54,29 @@ export default function RobotMascot() {
       {/* Floating Robot Body Container */}
       <div 
         style={{
-          animation: 'robotFloat 4s ease-in-out infinite alternate'
+          animation: 'robotFloat 4s ease-in-out infinite alternate',
+          width: '150px',
+          height: '175px',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
-        className="relative w-36 h-44 sm:w-44 sm:h-52 flex flex-col items-center justify-center"
       >
         <svg 
           viewBox="0 0 200 240" 
-          className="w-full h-full drop-shadow-xl overflow-visible"
+          style={{
+            width: '100%',
+            height: '100%',
+            filter: 'drop-shadow(0 12px 20px rgba(15, 23, 42, 0.15))',
+            overflow: 'visible'
+          }}
         >
           <defs>
             {/* Gradients */}
             <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#FFFFFF" />
-              <stop offset="60%" stopColor="#F1F5F9" />
+              <stop offset="65%" stopColor="#F1F5F9" />
               <stop offset="100%" stopColor="#E2E8F0" />
             </linearGradient>
 
@@ -73,7 +103,7 @@ export default function RobotMascot() {
           </defs>
 
           {/* Shadow Underneath */}
-          <ellipse cx="100" cy="225" rx="45" ry="8" fill="rgba(15, 23, 42, 0.12)" />
+          <ellipse cx="100" cy="222" rx="45" ry="7" fill="rgba(15, 23, 42, 0.12)" />
 
           {/* Left Leg (Swinging Pendulum) */}
           <g 
@@ -105,7 +135,7 @@ export default function RobotMascot() {
 
           {/* Antenna */}
           <line x1="100" y1="45" x2="100" y2="25" stroke="#94A3B8" strokeWidth="3.5" strokeLinecap="round" />
-          <circle cx="100" cy="22" r="7" fill="url(#cyanGlow)" className="animate-pulse" />
+          <circle cx="100" cy="22" r="7" fill="url(#cyanGlow)" />
 
           {/* Ear Accent Caps */}
           <circle cx="48" cy="72" r="8" fill="#0284C7" />
@@ -162,7 +192,7 @@ export default function RobotMascot() {
             transform: translateY(0px);
           }
           100% {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
           }
         }
 

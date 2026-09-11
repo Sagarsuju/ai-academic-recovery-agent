@@ -139,6 +139,16 @@ export default function LoginPage() {
           borderRadius: '20px'
         }}
       >
+        {/* Animated 3D AI Robot Mascot Sitting on Top-Right Corner */}
+        <div style={{
+          position: 'absolute',
+          top: '-70px',
+          right: '-45px',
+          zIndex: 50
+        }}>
+          <RobotMascot />
+        </div>
+
         {/* Branding & Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
 
