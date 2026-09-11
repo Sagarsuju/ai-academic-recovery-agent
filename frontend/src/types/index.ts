@@ -1,4 +1,4 @@
-export type Role = 'HOD' | 'FACULTY';
+export type Role = 'HOD' | 'FACULTY' | 'STUDENT' | 'ADMIN';
 
 export type RiskLevel = 'ON_TRACK' | 'MINOR_SLIPPAGE' | 'SIGNIFICANT_SLIPPAGE' | 'CRITICAL';
 
@@ -119,4 +119,67 @@ export interface DepartmentSummary {
   significantSlippage: number;
   critical: number;
   overallSyllabusCoverage: number;
+}
+
+export interface StudentCourseProgress {
+  id: string;
+  code: string;
+  name: string;
+  section: string;
+  facultyName: string;
+  attendancePercentage: number;
+  syllabusCoverage: number;
+  riskLevel: RiskLevel;
+  nextClassSlot?: string;
+  pendingTopicsCount: number;
+  isRecoveryEnrolled: boolean;
+}
+
+export interface WeeklyTimetableSlot {
+  id: string;
+  day: string;
+  startTime: string;
+  endTime: string;
+  courseCode: string;
+  courseName: string;
+  room: string;
+  facultyName: string;
+  isRecovery: boolean;
+  topicTitle?: string;
+}
+
+export interface AdminUserAccount {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+  department: string;
+  designationOrSection: string;
+  status: 'ACTIVE' | 'INACTIVE';
+  lastLogin: string;
+}
+
+export interface SystemIntegrationStatus {
+  attendance_system: {
+    integration_name: string;
+    last_sync_time?: string;
+    last_sync_status: string;
+    records_synced: number;
+    details?: string;
+  };
+  lesson_plan_system: {
+    integration_name: string;
+    last_sync_time?: string;
+    last_sync_status: string;
+    records_synced: number;
+    details?: string;
+  };
+  scheduler_running: boolean;
+}
+
+export interface RagDocumentItem {
+  source_filename: string;
+  doc_type: string;
+  upload_date: string;
+  chunk_count: number;
 }

@@ -1,0 +1,16 @@
+Vignan's Foundation for Science, Technology & Research
+Department of Computer Science & Engineering
+COURSE PROGRESS & ACADEMIC RECOVERY POLICY (2026-2027)
+
+1. SYLLABUS PROGRESS MONITORING & DEFICIT THRESHOLDS
+1.1 Weekly expected syllabus completion targets are established by the Academic Planning Committee prior to semester commencement.
+1.2 Course progress risk levels are classified into four operational tiers:
+    - ON TRACK: Actual coverage within 5% of expected target.
+    - MINOR SLIPPAGE: Syllabus coverage gap between 5% and 12%. Course faculty must accelerate lecture pace by 1 topic per week.
+    - SIGNIFICANT SLIPPAGE: Syllabus coverage gap between 12% and 25%. Faculty and Class Mentor must submit a 2-week catch-up schedule.
+    - CRITICAL DEFICIT: Syllabus coverage gap exceeding 25% or predicted completion delay > 3 weeks.
+
+2. MANDATORY RECOVERY ACTIONS FOR CRITICAL DEFICIT
+2.1 When a course is flagged as CRITICAL DEFICIT, the Head of Department (HOD) is authorized to allocate up to 6 mandatory extra recovery lecture slots using open Friday afternoon and Saturday timetable slots.
+2.2 The Recovery Engine optimizer must prioritize foundational prerequisite topics (e.g. Logic Resolution, Decision Trees, Virtual Memory Inodes) and streamline tutorial case studies.
+2.3 Timetable recovery class allocations must not create slot conflicts for assigned faculty or student sections.

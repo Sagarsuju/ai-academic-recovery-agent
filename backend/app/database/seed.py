@@ -31,6 +31,31 @@ def seed_database():
                             conn.execute(text(statement))
                         except Exception:
                             pass
+
+        # Safe schema migrations for attendance and sync_status
+        try:
+            from sqlalchemy import inspect
+            insp = inspect(engine)
+            if "attendance" in insp.get_table_names():
+                cols = [c["name"] for c in insp.get_columns("attendance")]
+                if "student_id" not in cols:
+                    conn.execute(text("ALTER TABLE attendance ADD COLUMN student_id VARCHAR(50)"))
+                if "status" not in cols:
+                    conn.execute(text("ALTER TABLE attendance ADD COLUMN status VARCHAR(20) DEFAULT 'PRESENT'"))
+            if "sync_status" not in insp.get_table_names():
+                conn.execute(text("""
+                    CREATE TABLE IF NOT EXISTS sync_status (
+                        integration_name VARCHAR(50) PRIMARY KEY,
+                        last_sync_time TIMESTAMP,
+                        last_sync_status VARCHAR(20),
+                        records_synced INT DEFAULT 0,
+                        details TEXT,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                """))
+        except Exception as e:
+            print(f"Migration note: {e}")
+
         conn.commit()
 
 if __name__ == "__main__":

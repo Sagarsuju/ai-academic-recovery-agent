@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/ui/AppShell';
+import StatusMarker from '@/components/ui/StatusMarker';
 import { calculateWhatIf } from '@/services/recoveryService';
 import { Sliders, Sparkles, TrendingUp, Calendar, CheckCircle2, AlertTriangle, ArrowRight, Zap } from 'lucide-react';
 
@@ -17,28 +18,35 @@ export default function HodWhatIfSimulatorPage() {
       {/* Screen Header */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-          <span className="badge" style={{ background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2))', color: '#ec4899', border: '1px solid rgba(236, 72, 153, 0.3)' }}>
-            <Sliders size={12} /> Interactive Syllabus Trajectory Simulator
+          <span className="badge" style={{ background: '#FFFFFF', color: 'var(--ink)', border: '1px solid var(--line)' }}>
+            <Sliders size={12} color="var(--brass)" /> Interactive Syllabus Trajectory Simulator
           </span>
         </div>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#f8fafc', marginBottom: '4px' }}>
+        <h1 style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: '1.8rem',
+          fontWeight: 800,
+          color: 'var(--ink)',
+          marginBottom: '4px',
+          letterSpacing: '-0.02em'
+        }}>
           What-If Recovery Schedule Simulator
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--ink-muted)', fontSize: '0.88rem' }}>
           Simulate the impact of extra recovery classes on completion timelines in real-time.
         </p>
       </div>
 
       {/* Simulator Controls Card */}
       <div className="glass-card" style={{
-        padding: '32px',
-        marginBottom: '28px',
-        background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.9) 100%)',
-        borderColor: 'rgba(99, 102, 241, 0.3)'
+        padding: '28px',
+        marginBottom: '24px',
+        background: '#FFFFFF',
+        border: '1px solid var(--line)'
       }}>
         {/* Course Select Dropdown */}
         <div style={{ marginBottom: '24px' }}>
-          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#94a3b8', marginBottom: '8px' }}>
+          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '8px' }}>
             Select Target Course to Simulate:
           </label>
           <select
@@ -47,12 +55,12 @@ export default function HodWhatIfSimulatorPage() {
             style={{
               width: '100%',
               maxWidth: '450px',
-              padding: '12px',
-              borderRadius: '12px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              color: '#f8fafc',
-              fontSize: '0.95rem',
+              padding: '10px 14px',
+              borderRadius: '6px',
+              background: 'var(--paper)',
+              border: '1px solid var(--line)',
+              color: 'var(--ink)',
+              fontSize: '0.9rem',
               fontWeight: 700,
               outline: 'none'
             }}
@@ -65,35 +73,37 @@ export default function HodWhatIfSimulatorPage() {
 
         {/* Counter Widget */}
         <div style={{
-          background: 'rgba(255, 255, 255, 0.03)',
-          padding: '24px',
-          borderRadius: '16px',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          background: 'var(--paper)',
+          padding: '20px 24px',
+          borderRadius: '6px',
+          border: '1px solid var(--line)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: '28px'
+          marginBottom: '24px',
+          flexWrap: 'wrap',
+          gap: '16px'
         }}>
           <div>
-            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#f8fafc' }}>
+            <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--ink)' }}>
               Additional Extra Recovery Classes:
             </div>
-            <div style={{ fontSize: '0.82rem', color: '#94a3b8' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)' }}>
               Adjust counter to calculate revised completion trajectory
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <button
               onClick={() => setExtraClasses(Math.max(0, extraClasses - 1))}
               style={{
-                width: '46px',
-                height: '46px',
-                borderRadius: '12px',
-                border: '1px solid rgba(99, 102, 241, 0.4)',
-                background: 'rgba(99, 102, 241, 0.2)',
-                color: '#fff',
-                fontSize: '1.4rem',
+                width: '40px',
+                height: '40px',
+                borderRadius: '6px',
+                border: '1px solid var(--line)',
+                background: '#FFFFFF',
+                color: 'var(--ink)',
+                fontSize: '1.3rem',
                 fontWeight: 800,
                 cursor: 'pointer'
               }}
@@ -102,11 +112,11 @@ export default function HodWhatIfSimulatorPage() {
             </button>
 
             <span style={{
-              fontSize: '2.6rem',
+              fontSize: '2.4rem',
               fontWeight: 800,
-              fontFamily: 'var(--font-heading)',
-              color: '#818cf8',
-              minWidth: '50px',
+              fontFamily: 'var(--font-serif)',
+              color: 'var(--ink)',
+              minWidth: '45px',
               textAlign: 'center'
             }}>
               {extraClasses}
@@ -115,13 +125,13 @@ export default function HodWhatIfSimulatorPage() {
             <button
               onClick={() => setExtraClasses(extraClasses + 1)}
               style={{
-                width: '46px',
-                height: '46px',
-                borderRadius: '12px',
-                border: '1px solid rgba(99, 102, 241, 0.4)',
-                background: 'rgba(99, 102, 241, 0.2)',
-                color: '#fff',
-                fontSize: '1.4rem',
+                width: '40px',
+                height: '40px',
+                borderRadius: '6px',
+                border: '1px solid var(--line)',
+                background: '#FFFFFF',
+                color: 'var(--ink)',
+                fontSize: '1.3rem',
                 fontWeight: 800,
                 cursor: 'pointer'
               }}
@@ -133,42 +143,44 @@ export default function HodWhatIfSimulatorPage() {
 
         {/* Dynamic Simulation Result Box */}
         <div className="glass-card" style={{
-          padding: '24px',
-          background: result.isBackOnTrack ? 'rgba(16, 185, 129, 0.12)' : 'rgba(245, 158, 11, 0.12)',
-          borderColor: result.isBackOnTrack ? 'rgba(16, 185, 129, 0.4)' : 'rgba(245, 158, 11, 0.4)'
+          padding: '20px 24px',
+          background: 'var(--paper)',
+          border: '1px solid var(--line)',
+          borderLeft: result.isBackOnTrack ? '4px solid var(--ontrack)' : '4px solid var(--monitor)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: result.isBackOnTrack ? '#10b981' : '#f59e0b' }}>
+            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--ink)' }}>
               Simulated Forecast Output
             </span>
-            <span className={result.isBackOnTrack ? 'badge badge-on-track' : 'badge badge-minor'}>
-              {result.statusText}
-            </span>
+            <StatusMarker
+              status={result.isBackOnTrack ? 'ON_TRACK' : 'MONITOR'}
+              label={result.statusText}
+            />
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: '16px',
             textAlign: 'center'
           }}>
             <div>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Baseline Completion</div>
-              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ef4444', textDecoration: 'line-through' }}>
+              <div style={{ fontSize: '0.72rem', color: 'var(--ink-muted)' }}>Baseline Completion</div>
+              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--critical)', textDecoration: 'line-through', fontFamily: 'var(--font-serif)' }}>
                 January 15, 2027
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '0.75rem', color: '#10b981' }}>Revised Simulated Finish</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#10b981', fontFamily: 'var(--font-heading)' }}>
+              <div style={{ fontSize: '0.72rem', color: 'var(--ontrack)' }}>Revised Simulated Finish</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--ontrack)', fontFamily: 'var(--font-serif)' }}>
                 {result.newCompletionDate}
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '0.75rem', color: '#818cf8' }}>Simulated Coverage</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#818cf8', fontFamily: 'var(--font-heading)' }}>
+              <div style={{ fontSize: '0.72rem', color: 'var(--ink-muted)' }}>Simulated Coverage</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--ink)', fontFamily: 'var(--font-serif)' }}>
                 {result.newCoverage}%
               </div>
             </div>
@@ -176,7 +188,7 @@ export default function HodWhatIfSimulatorPage() {
         </div>
       </div>
 
-      {/* Navigation CTA */}
+      {/* Navigation CTA (Single Primary CTA on this page) */}
       <div style={{ textAlign: 'right' }}>
         <Link href="/hod/timetable" style={{ textDecoration: 'none' }}>
           <button className="btn-primary" style={{ padding: '12px 24px' }}>

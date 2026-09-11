@@ -68,14 +68,25 @@ CREATE TABLE IF NOT EXISTS lesson_plans (
 
 CREATE TABLE IF NOT EXISTS attendance (
     id VARCHAR(50) PRIMARY KEY,
+    student_id VARCHAR(50) REFERENCES students(id),
     course_id VARCHAR(50) REFERENCES courses(id) ON DELETE CASCADE,
     date VARCHAR(50) NOT NULL,
-    present_count INT NOT NULL,
-    absent_count INT NOT NULL,
-    total_count INT NOT NULL,
-    topic_status VARCHAR(30) NOT NULL,
+    status VARCHAR(20) DEFAULT 'PRESENT',
+    present_count INT DEFAULT 1,
+    absent_count INT DEFAULT 0,
+    total_count INT DEFAULT 1,
+    topic_status VARCHAR(30) DEFAULT 'COMPLETED',
     actual_topic_covered TEXT,
     logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS sync_status (
+    integration_name VARCHAR(50) PRIMARY KEY,
+    last_sync_time TIMESTAMP,
+    last_sync_status VARCHAR(20),
+    records_synced INT DEFAULT 0,
+    details TEXT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS timetables (

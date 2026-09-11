@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Bell, Search, ShieldAlert, UserCheck, Sparkles, LogOut } from 'lucide-react';
+import { Bell, Search, ShieldAlert, UserCheck, Sparkles, LogOut, GraduationCap, Settings, User } from 'lucide-react';
 import { Role } from '@/types';
 
 interface VignanHeaderProps {
@@ -22,319 +22,333 @@ export default function VignanHeader({ currentRole, onRoleChange, unreadNotifica
       router.push('/faculty');
     } else if (newRole === 'HOD' && !pathname.startsWith('/hod')) {
       router.push('/hod');
+    } else if (newRole === 'STUDENT' && !pathname.startsWith('/student')) {
+      router.push('/student/dashboard');
+    } else if (newRole === 'ADMIN' && !pathname.startsWith('/admin')) {
+      router.push('/admin/users');
     }
   };
 
   return (
     <header style={{
-      background: '#ffffff',
-      borderBottom: '2px solid #e2e8f0',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+      background: 'rgba(255, 255, 255, 0.90)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      borderBottom: '1px solid var(--border-subtle)',
       position: 'sticky',
       top: 0,
-      zIndex: 50
+      zIndex: 50,
+      boxShadow: '0 2px 12px -2px rgba(108, 99, 255, 0.04)'
     }}>
       {/* Top University Official Branding Bar */}
       <div style={{
-        padding: '12px 28px',
+        padding: '10px 28px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottom: '1px solid #f1f5f9',
+        borderBottom: '1px solid var(--border-subtle)',
         flexWrap: 'wrap',
         gap: '16px'
       }}>
         {/* TOP LEFT: Official Vignan University Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              {/* Shield Crest Icon */}
-              <svg width="44" height="52" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 5L90 20V55C90 82 72 105 50 115C28 105 10 82 10 55V20L50 5Z" fill="#7c3aed" stroke="#6d28d9" strokeWidth="4" />
-                <circle cx="50" cy="52" r="28" fill="#ffffff" stroke="#2563eb" strokeWidth="4" />
-                <path d="M50 32L54 44H66L56 52L60 64L50 56L40 64L44 52L34 44H46L50 32Z" fill="#0284c7" />
-              </svg>
-
-              <div>
-                <div style={{
-                  fontSize: '1.6rem',
-                  fontWeight: 900,
-                  fontFamily: 'Inter, sans-serif',
-                  color: '#e11d48',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.1
-                }}>
-                  VIGNAN'S
-                </div>
-                <div style={{
-                  fontSize: '0.68rem',
-                  fontWeight: 800,
-                  color: '#0f172a',
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase'
-                }}>
-                  Foundation for Science, Technology & Research
-                </div>
-              </div>
-            </div>
-
-            {/* Blue Banner */}
-            <div style={{
-              background: '#0284c7',
-              color: '#ffffff',
-              fontSize: '0.65rem',
-              fontWeight: 700,
-              padding: '3px 10px',
-              borderRadius: '4px',
-              marginTop: '4px',
-              textAlign: 'center',
-              letterSpacing: '0.02em'
-            }}>
-              (Deemed to be University) - Estd. u/s 3 of UGC Act 1956
-            </div>
+          <div style={{
+            background: '#FFFFFF',
+            padding: '4px 10px',
+            borderRadius: '8px',
+            border: '1px solid var(--border-subtle)',
+            boxShadow: '0 1px 3px rgba(30, 35, 51, 0.03)',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <img 
+              src="/vignan_logo.jpg" 
+              alt="Vignan University Logo" 
+              style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
+            />
           </div>
         </div>
 
         {/* TOP CENTER: Project Header Title */}
         <div style={{ textAlign: 'center' }}>
           <div style={{
-            fontSize: '0.72rem',
-            fontWeight: 800,
-            color: '#64748b',
-            letterSpacing: '0.1em',
+            fontSize: '0.68rem',
+            fontWeight: 700,
+            color: 'var(--text-muted)',
+            letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            marginBottom: '2px'
+            marginBottom: '2px',
+            fontFamily: 'var(--font-sans)'
           }}>
-            DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING PRESENTS
+            DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
           </div>
           <div style={{
-            fontSize: '1.35rem',
-            fontWeight: 900,
-            fontFamily: 'Outfit, sans-serif',
-            color: '#0f172a',
-            letterSpacing: '-0.02em',
+            fontSize: '1.18rem',
+            fontWeight: 700,
+            fontFamily: 'var(--font-heading)',
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.01em',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px'
           }}>
-            <Sparkles size={20} color="#7c3aed" /> AI ACADEMIC RECOVERY & COURSE PROGRESS AGENT
+            <span style={{
+              display: 'inline-flex',
+              padding: '4px',
+              borderRadius: '6px',
+              background: 'linear-gradient(135deg, #6C63FF, #4FACFE)',
+              color: '#FFFFFF'
+            }}>
+              <Sparkles size={14} />
+            </span>
+            <span>AI ACADEMIC RECOVERY & COURSE PROGRESS AGENT</span>
           </div>
         </div>
 
-        {/* TOP RIGHT: The 5 Circular Accreditation Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {/* Badge 1: NAAC A+ */}
+        {/* TOP RIGHT: Accreditation Badges Image */}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{
-            width: '54px',
-            height: '54px',
-            borderRadius: '50%',
-            border: '2px solid #7c3aed',
-            background: '#ffffff',
+            background: '#FFFFFF',
+            padding: '4px 8px',
+            borderRadius: '8px',
+            border: '1px solid var(--border-subtle)',
+            boxShadow: '0 1px 3px rgba(30, 35, 51, 0.03)',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2px',
-            boxShadow: '0 2px 8px rgba(124, 58, 237, 0.15)'
+            alignItems: 'center'
           }}>
-            <span style={{ fontSize: '0.52rem', fontWeight: 800, color: '#475569' }}>NAAC</span>
-            <span style={{ fontSize: '0.9rem', fontWeight: 900, color: '#dc2626', lineHeight: 1 }}>A+</span>
-            <span style={{ fontSize: '0.45rem', color: '#64748b', fontWeight: 700 }}>3.49 CGPA</span>
-          </div>
-
-          {/* Badge 2: NIRF 75 */}
-          <div style={{
-            width: '54px',
-            height: '54px',
-            borderRadius: '50%',
-            border: '2px solid #f59e0b',
-            background: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2px',
-            boxShadow: '0 2px 8px rgba(245, 158, 11, 0.15)'
-          }}>
-            <span style={{ fontSize: '0.6rem', fontWeight: 900, color: '#1e3a8a' }}>nirf</span>
-            <span style={{ fontSize: '0.52rem', fontWeight: 800, color: '#0f172a' }}>Rank 75</span>
-            <span style={{ fontSize: '0.45rem', color: '#64748b', fontWeight: 700 }}>2023</span>
-          </div>
-
-          {/* Badge 3: NBA Accredited */}
-          <div style={{
-            width: '54px',
-            height: '54px',
-            borderRadius: '50%',
-            border: '2px solid #ec4899',
-            background: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2px',
-            boxShadow: '0 2px 8px rgba(236, 72, 153, 0.15)'
-          }}>
-            <span style={{ fontSize: '0.65rem', fontWeight: 900, color: '#ea580c' }}>NBA</span>
-            <span style={{ fontSize: '0.45rem', fontWeight: 800, color: '#0f172a', textAlign: 'center', lineHeight: 1 }}>CSE, ECE, EEE</span>
-          </div>
-
-          {/* Badge 4: AICTE Approved */}
-          <div style={{
-            width: '54px',
-            height: '54px',
-            borderRadius: '50%',
-            border: '2px solid #0284c7',
-            background: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2px',
-            boxShadow: '0 2px 8px rgba(2, 132, 199, 0.15)'
-          }}>
-            <span style={{ fontSize: '0.55rem', fontWeight: 900, color: '#d97706' }}>AICTE</span>
-            <span style={{ fontSize: '0.45rem', color: '#64748b', fontWeight: 700 }}>Approved</span>
-          </div>
-
-          {/* Badge 5: UGC 12(B) */}
-          <div style={{
-            width: '54px',
-            height: '54px',
-            borderRadius: '50%',
-            border: '2px solid #10b981',
-            background: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2px',
-            boxShadow: '0 2px 8px rgba(16, 185, 129, 0.15)'
-          }}>
-            <span style={{ fontSize: '0.52rem', fontWeight: 800, color: '#1e3a8a' }}>UGC 12(B)</span>
-            <span style={{ fontSize: '0.48rem', fontWeight: 900, color: '#047857' }}>STATUS</span>
+            <img 
+              src="/accreditation_badges.jpg" 
+              alt="Vignan Accreditation Badges" 
+              style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+            />
           </div>
         </div>
       </div>
 
       {/* Lower Navigation & Controls Bar */}
       <div style={{
-        padding: '10px 28px',
-        background: '#f8fafc',
+        padding: '8px 28px',
+        background: 'rgba(255, 255, 255, 0.7)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        borderBottom: '1px solid #e2e8f0'
+        justifyContent: 'space-between'
       }}>
-        {/* Global Search Input */}
-        <div style={{ position: 'relative', width: '320px' }}>
-          <Search size={16} color="#64748b" style={{ position: 'absolute', left: '12px', top: '10px' }} />
+        {/* Global Search Input with Cmd+K Badge */}
+        <div
+          onClick={() => {
+            window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+          }}
+          style={{ position: 'relative', width: '340px', cursor: 'pointer' }}
+        >
+          <Search size={16} color="#64748B" style={{ position: 'absolute', left: '14px', top: '10px' }} />
           <input
             type="text"
-            placeholder="Search courses, faculty, topics..."
+            readOnly
+            placeholder="Search tools, courses, topics..."
             style={{
               width: '100%',
-              padding: '8px 12px 8px 36px',
-              borderRadius: '8px',
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
+              padding: '8px 70px 8px 38px',
+              borderRadius: '999px',
+              background: '#FFFFFF',
+              border: '1px solid var(--border-subtle)',
+              color: 'var(--text-primary)',
               fontSize: '0.85rem',
-              outline: 'none'
+              outline: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 1px 4px rgba(30, 35, 51, 0.03)'
             }}
           />
+          <span style={{
+            position: 'absolute',
+            right: '10px',
+            top: '7px',
+            fontSize: '0.7rem',
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            padding: '2px 7px',
+            borderRadius: '6px',
+            background: '#F1F5F9',
+            border: '1px solid #E2E8F0',
+            color: '#64748B'
+          }}>
+            ⌘K
+          </span>
         </div>
 
         {/* Role Toggle Switcher & Quick Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           {/* Role Toggle Switcher */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            background: '#e2e8f0',
+            background: '#F1F5F9',
             padding: '3px',
-            borderRadius: '8px'
+            borderRadius: '10px',
+            gap: '3px'
           }}>
             <button
               onClick={() => handleRoleToggle('HOD')}
               style={{
                 padding: '6px 14px',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 border: 'none',
-                fontSize: '0.78rem',
-                fontWeight: 700,
+                fontSize: '0.8rem',
+                fontWeight: currentRole === 'HOD' ? 700 : 500,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                background: currentRole === 'HOD' ? '#1e3a8a' : 'transparent',
-                color: currentRole === 'HOD' ? '#ffffff' : '#475569',
-                boxShadow: currentRole === 'HOD' ? '0 2px 8px rgba(30, 58, 138, 0.3)' : 'none',
-                transition: 'all 0.15s ease'
+                gap: '5px',
+                background: currentRole === 'HOD' ? '#FFFFFF' : 'transparent',
+                color: currentRole === 'HOD' ? '#6C63FF' : '#64748B',
+                boxShadow: currentRole === 'HOD' ? '0 2px 6px rgba(108, 99, 255, 0.12)' : 'none',
+                transition: 'all 0.18s ease'
               }}
             >
-              <ShieldAlert size={14} /> HOD Portal
+              <ShieldAlert size={14} color={currentRole === 'HOD' ? '#6C63FF' : '#64748B'} /> HOD
             </button>
 
             <button
               onClick={() => handleRoleToggle('FACULTY')}
               style={{
                 padding: '6px 14px',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 border: 'none',
-                fontSize: '0.78rem',
-                fontWeight: 700,
+                fontSize: '0.8rem',
+                fontWeight: currentRole === 'FACULTY' ? 700 : 500,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                background: currentRole === 'FACULTY' ? '#1e3a8a' : 'transparent',
-                color: currentRole === 'FACULTY' ? '#ffffff' : '#475569',
-                boxShadow: currentRole === 'FACULTY' ? '0 2px 8px rgba(30, 58, 138, 0.3)' : 'none',
-                transition: 'all 0.15s ease'
+                gap: '5px',
+                background: currentRole === 'FACULTY' ? '#FFFFFF' : 'transparent',
+                color: currentRole === 'FACULTY' ? '#4FACFE' : '#64748B',
+                boxShadow: currentRole === 'FACULTY' ? '0 2px 6px rgba(79, 172, 254, 0.15)' : 'none',
+                transition: 'all 0.18s ease'
               }}
             >
-              <UserCheck size={14} /> Faculty Portal
+              <UserCheck size={14} color={currentRole === 'FACULTY' ? '#4FACFE' : '#64748B'} /> Faculty
+            </button>
+
+            <button
+              onClick={() => handleRoleToggle('STUDENT')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                fontSize: '0.8rem',
+                fontWeight: currentRole === 'STUDENT' ? 700 : 500,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                background: currentRole === 'STUDENT' ? '#FFFFFF' : 'transparent',
+                color: currentRole === 'STUDENT' ? '#10B981' : '#64748B',
+                boxShadow: currentRole === 'STUDENT' ? '0 2px 6px rgba(52, 211, 153, 0.15)' : 'none',
+                transition: 'all 0.18s ease'
+              }}
+            >
+              <GraduationCap size={14} color={currentRole === 'STUDENT' ? '#10B981' : '#64748B'} /> Student
+            </button>
+
+            <button
+              onClick={() => handleRoleToggle('ADMIN')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                fontSize: '0.8rem',
+                fontWeight: currentRole === 'ADMIN' ? 700 : 500,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                background: currentRole === 'ADMIN' ? '#FFFFFF' : 'transparent',
+                color: currentRole === 'ADMIN' ? '#818CF8' : '#64748B',
+                boxShadow: currentRole === 'ADMIN' ? '0 2px 6px rgba(129, 140, 248, 0.15)' : 'none',
+                transition: 'all 0.18s ease'
+              }}
+            >
+              <Settings size={14} color={currentRole === 'ADMIN' ? '#818CF8' : '#64748B'} /> Admin
             </button>
           </div>
 
-          {/* Notifications Link */}
-          <Link href="/notifications" style={{ textDecoration: 'none', color: 'inherit' }}>
+          {/* AI Assistant Quick Nav */}
+          <Link href="/hod/ai-assistant" style={{ textDecoration: 'none' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              borderRadius: '999px',
+              background: '#F0EEFF',
+              border: '1px solid #E0DBFF',
+              color: '#6C63FF',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}>
+              <Sparkles size={14} color="#6C63FF" />
+              <span>AI Chat</span>
+            </div>
+          </Link>
+
+          {/* Notifications Link with Soft Pastel Red Badge */}
+          <Link href={currentRole === 'STUDENT' ? "/student/notifications" : "/notifications"} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div style={{
               position: 'relative',
               width: '38px',
               height: '38px',
-              borderRadius: '8px',
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
+              borderRadius: '10px',
+              background: '#FFFFFF',
+              border: '1px solid var(--border-subtle)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(30, 35, 51, 0.04)',
+              transition: 'all 0.15s ease'
             }}>
-              <Bell size={18} color="#334155" />
+              <Bell size={18} color="#64748B" />
               {unreadNotificationsCount > 0 && (
                 <span style={{
                   position: 'absolute',
-                  top: '-4px',
-                  right: '-4px',
+                  top: '-3px',
+                  right: '-3px',
                   width: '18px',
                   height: '18px',
                   borderRadius: '50%',
-                  background: '#dc2626',
-                  color: '#fff',
-                  fontSize: '0.68rem',
+                  background: 'linear-gradient(135deg, #F87171, #EF4444)',
+                  color: '#FFFFFF',
+                  fontSize: '0.66rem',
                   fontWeight: 800,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 6px rgba(248, 113, 113, 0.4)'
                 }}>
                   {unreadNotificationsCount}
                 </span>
               )}
             </div>
           </Link>
+
+          {/* Profile Soft Indigo Avatar */}
+          <div style={{
+            width: '38px',
+            height: '38px',
+            borderRadius: '10px',
+            background: '#EEF2FF',
+            border: '1px solid #C7D2FE',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#4F46E5',
+            fontWeight: 700,
+            fontSize: '0.85rem'
+          }} title="Current Profile">
+            <User size={18} color="#4F46E5" />
+          </div>
 
           {/* Logout button */}
           <button
@@ -344,13 +358,15 @@ export default function VignanHeader({ currentRole, onRoleChange, unreadNotifica
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: '#64748b',
+              color: '#94A3B8',
               display: 'flex',
               alignItems: 'center',
-              padding: '6px'
+              padding: '6px',
+              borderRadius: '6px',
+              transition: 'all 0.15s ease'
             }}
           >
-            <LogOut size={16} />
+            <LogOut size={17} />
           </button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import AppShell from '@/components/ui/AppShell';
 import StatCard from '@/components/ui/StatCard';
 import RiskBadge from '@/components/ui/RiskBadge';
+import StatusMarker from '@/components/ui/StatusMarker';
 import { getTodayClasses } from '@/services/attendanceService';
 import { getCourses } from '@/services/courseService';
 import { ClassScheduleItem, Course } from '@/types';
@@ -17,7 +18,9 @@ import {
   BookOpen,
   UserCheck,
   Building,
-  Sparkles
+  Sparkles,
+  Users,
+  MapPin
 } from 'lucide-react';
 
 export default function FacultyDashboardPage() {
@@ -51,144 +54,198 @@ export default function FacultyDashboardPage() {
     <AppShell>
       {/* Header Banner */}
       <div className="glass-card" style={{
-        padding: '28px',
-        marginBottom: '28px',
-        background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)',
-        borderColor: 'rgba(99, 102, 241, 0.3)',
+        padding: '24px 28px',
+        marginBottom: '24px',
+        background: 'rgba(255, 255, 255, 0.88)',
+        border: '1px solid rgba(199, 210, 254, 0.6)',
+        borderRadius: '16px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px',
+        boxShadow: '0 4px 20px -2px rgba(108, 99, 255, 0.04)'
       }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <span className="badge" style={{ background: 'rgba(99, 102, 241, 0.2)', color: '#a5b4fc' }}>
-              <Building size={12} /> Department of Computer Science & Engineering
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              padding: '4px 10px',
+              background: '#F0EEFF',
+              color: '#6C63FF',
+              border: '1px solid #E0DBFF',
+              borderRadius: '999px'
+            }}>
+              <Building size={12} color="#6C63FF" /> Department of Computer Science & Engineering
             </span>
-            <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>•</span>
-            <span style={{ fontSize: '0.8rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>•</span>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Calendar size={13} /> {currentDateFormatted}
             </span>
           </div>
 
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#f8fafc', marginBottom: '4px' }}>
+          <h1 style={{
+            fontSize: '1.85rem',
+            fontWeight: 800,
+            fontFamily: 'var(--font-heading)',
+            color: 'var(--text-primary)',
+            marginBottom: '4px',
+            letterSpacing: '-0.02em'
+          }}>
             Welcome back, Prof. Ananya Sharma
           </h1>
-          <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
-            You have <strong style={{ color: '#f8fafc' }}>{pendingCount} pending class updates</strong> to record for today.
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>
+            You have <strong style={{ color: '#D97706' }}>{pendingCount} pending class updates</strong> to record for today.
           </p>
         </div>
 
         <Link href="/faculty/attendance" style={{ textDecoration: 'none' }}>
-          <button className="btn-primary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>
-            <UserCheck size={18} /> Mark Attendance & Update Topic <ArrowRight size={18} />
+          <button className="btn-primary gradient-btn text-xs px-5 py-2.5">
+            <UserCheck size={16} /> Mark Attendance & Topic <ArrowRight size={16} />
           </button>
         </Link>
       </div>
 
-      {/* KPI Stats Grid */}
+      {/* KPI Stats Grid - Faculty Color Mapping: Blue, Purple, Green, Yellow, Cyan */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '20px',
-        marginBottom: '32px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gap: '16px',
+        marginBottom: '28px'
       }}>
         <StatCard
-          title="Today's Classes"
-          value={todayClasses.length}
-          subtitle="Scheduled lectures"
-          icon={<Clock size={20} color="#818cf8" />}
-          glowColor="indigo"
+          title="Assigned Courses"
+          value={assignedCourses.length || 3}
+          subtitle="CSE Theory & Lab"
+          colorIdentity="blue"
+          icon={<BookOpen size={18} />}
+        />
+
+        <StatCard
+          title="Total Enrolled Students"
+          value="184"
+          subtitle="Across 3 sections"
+          colorIdentity="purple"
+          icon={<Users size={18} />}
         />
 
         <StatCard
           title="Completed Today"
           value={completedCount}
-          subtitle="Attendance & Topic logged"
-          icon={<CheckCircle2 size={20} color="#10b981" />}
-          glowColor="emerald"
+          subtitle="Attendance & topic logged"
+          colorIdentity="green"
+          trend="Pacing On Target"
+          icon={<CheckCircle2 size={18} />}
         />
 
         <StatCard
           title="Pending Updates"
           value={pendingCount}
           subtitle="Action required post-class"
-          icon={<AlertCircle size={20} color="#f59e0b" />}
-          glowColor="amber"
+          colorIdentity="yellow"
+          icon={<AlertCircle size={18} />}
         />
 
         <StatCard
-          title="Avg Syllabus Coverage"
-          value="84%"
-          subtitle="Across 3 assigned courses"
-          icon={<BookOpen size={20} color="#8b5cf6" />}
-          glowColor="indigo"
+          title="Today's Schedule"
+          value={`${todayClasses.length} Slots`}
+          subtitle="CSE-A & CSE-B"
+          colorIdentity="cyan"
+          icon={<Clock size={18} />}
         />
       </div>
 
       {/* Today's Schedule Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#f8fafc' }}>
-              Today's Class Schedule
-            </h2>
-            <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Real-time Sync</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{
+                padding: '3px 8px',
+                borderRadius: '6px',
+                background: '#ECFAFF',
+                color: '#0284C7',
+                fontSize: '0.72rem',
+                fontWeight: 700
+              }}>
+                Schedule
+              </span>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 700, fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
+                Today's Class Schedule
+              </h2>
+            </div>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Real-time Sync</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {todayClasses.map((item) => (
-              <div key={item.id} className="glass-card" style={{
-                padding: '20px',
+              <div key={item.id} className="glass-card glass-card-interactive" style={{
+                padding: '18px 20px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                borderLeft: item.status === 'COMPLETED' ? '4px solid #10b981' : '4px solid #6366f1'
+                background: '#FFFFFF',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '12px',
+                borderLeft: item.status === 'COMPLETED' ? '4px solid #10B981' : '4px solid #4FACFE'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   <div style={{
-                    padding: '12px',
-                    borderRadius: '12px',
-                    background: item.status === 'COMPLETED' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(99, 102, 241, 0.12)',
-                    color: item.status === 'COMPLETED' ? '#10b981' : '#818cf8',
+                    padding: '10px',
+                    borderRadius: '10px',
+                    background: item.status === 'COMPLETED' ? '#ECFDF5' : '#EAF6FF',
+                    color: item.status === 'COMPLETED' ? '#10B981' : '#4FACFE',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    {item.status === 'COMPLETED' ? <CheckCircle2 size={24} /> : <Clock size={24} />}
+                    {item.status === 'COMPLETED' ? <CheckCircle2 size={20} /> : <Clock size={20} />}
                   </div>
 
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                      <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f8fafc' }}>
+                      <span style={{ fontWeight: 700, fontSize: '0.96rem', color: 'var(--text-primary)' }}>
                         {item.courseName}
                       </span>
-                      <span className="badge" style={{ background: 'rgba(255, 255, 255, 0.06)', color: '#cbd5e1' }}>
+                      <span style={{
+                        padding: '2px 7px',
+                        borderRadius: '6px',
+                        background: '#F1F5F9',
+                        color: 'var(--text-secondary)',
+                        fontSize: '0.72rem',
+                        fontWeight: 700
+                      }}>
                         {item.section}
                       </span>
-                      <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
-                        ({item.courseCode})
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <Clock size={12} /> {item.time}
                       </span>
-                    </div>
-
-                    <div style={{ fontSize: '0.82rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <span><Clock size={13} style={{ display: 'inline', marginRight: '4px' }} />{item.time}</span>
-                      <span>• Room {item.room}</span>
-                      <span>• {item.enrolledStudents} Students</span>
-                    </div>
-
-                    <div style={{ marginTop: '8px', fontSize: '0.8rem', color: '#cbd5e1' }}>
-                      <strong style={{ color: '#818cf8' }}>Planned Topic:</strong> {item.plannedTopic}
+                      <span>•</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <MapPin size={12} /> Room {item.room}
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  {item.status === 'COMPLETED' ? (
-                    <span className="badge badge-on-track">✓ Completed</span>
-                  ) : (
-                    <Link href="/faculty/attendance" style={{ textDecoration: 'none' }}>
-                      <button className="btn-primary" style={{ padding: '8px 16px', fontSize: '0.82rem' }}>
-                        Mark Update
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <StatusMarker
+                    status={item.status === 'COMPLETED' ? 'ON_PACE' : 'MONITOR'}
+                    label={item.status === 'COMPLETED' ? 'Completed' : 'Pending Update'}
+                  />
+
+                  {item.status !== 'COMPLETED' && (
+                    <Link href={`/faculty/attendance?classId=${item.id}`} style={{ textDecoration: 'none' }}>
+                      <button className="btn-primary gradient-btn" style={{ padding: '6px 14px', fontSize: '0.78rem' }}>
+                        Update
                       </button>
                     </Link>
                   )}
@@ -200,43 +257,59 @@ export default function FacultyDashboardPage() {
 
         {/* Assigned Courses Syllabus Snapshot */}
         <div>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#f8fafc', marginBottom: '16px' }}>
-            Assigned Courses
-          </h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+            <span style={{
+              padding: '3px 8px',
+              borderRadius: '6px',
+              background: '#F0EEFF',
+              color: '#6C63FF',
+              fontSize: '0.72rem',
+              fontWeight: 700
+            }}>
+              Curriculum
+            </span>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
+              Assigned Courses
+            </h2>
+          </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {assignedCourses.map((course) => (
-              <div key={course.id} className="glass-card" style={{ padding: '18px' }}>
+              <div key={course.id} className="glass-card" style={{
+                padding: '18px',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '12px'
+              }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#f8fafc' }}>
+                  <span style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-primary)' }}>
                     {course.name}
                   </span>
-                  <RiskBadge level={course.riskLevel} showIcon={false} />
+                  <RiskBadge level={course.riskLevel} />
                 </div>
 
-                <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginBottom: '12px' }}>
-                  Section: {course.section} • {course.code}
+                <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                  Section: {course.section} • <span style={{ fontFamily: 'monospace' }}>{course.code}</span>
                 </div>
 
                 <div style={{ marginBottom: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                    <span style={{ color: '#94a3b8' }}>Coverage</span>
-                    <span style={{ fontWeight: 700, color: '#f8fafc' }}>{course.actualPercentage}%</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Coverage</span>
+                    <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+                      {course.actualPercentage}%
+                    </span>
                   </div>
                   <div className="progress-bar-bg">
                     <div
-                      className="progress-bar-fill"
-                      style={{
-                        width: `${course.actualPercentage}%`,
-                        background: course.riskLevel === 'ON_TRACK' ? '#10b981' : course.riskLevel === 'MINOR_SLIPPAGE' ? '#f59e0b' : '#ef4444'
-                      }}
+                      className={`progress-bar-fill ${course.riskLevel === 'ON_TRACK' ? 'on-track' : 'minor'}`}
+                      style={{ width: `${course.actualPercentage}%` }}
                     />
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                   <span>Target: {course.expectedPercentage}%</span>
-                  <span>Gap: {course.gapPercentage > 0 ? `+${course.gapPercentage}% lag` : 'On Schedule'}</span>
+                  <span style={{ color: '#059669', fontWeight: 600 }}>Pacing Healthy</span>
                 </div>
               </div>
             ))}

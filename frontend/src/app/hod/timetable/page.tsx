@@ -40,14 +40,21 @@ export default function HodTimetablePage() {
       {/* Header */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-          <span className="badge" style={{ background: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
-            <Calendar size={12} /> Conflict-Free Timetable Slot Allocator
+          <span className="badge" style={{ background: '#FFFFFF', color: 'var(--ink)', border: '1px solid var(--line)' }}>
+            <Calendar size={12} color="var(--brass)" /> Constraint-Satisfaction Slot Allocator
           </span>
         </div>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#f8fafc', marginBottom: '4px' }}>
-          Timetable Recovery & Extra Class Scheduling
+        <h1 style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: '1.8rem',
+          fontWeight: 800,
+          color: 'var(--ink)',
+          marginBottom: '4px',
+          letterSpacing: '-0.02em'
+        }}>
+          Automated Remedial Timetable Optimization
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--ink-muted)', fontSize: '0.88rem' }}>
           AI automated check against faculty schedules, student section timetables, and available laboratory/lecture halls.
         </p>
       </div>
@@ -55,30 +62,32 @@ export default function HodTimetablePage() {
       {/* Success Modal / Banner when Approved */}
       {isApproved && (
         <div className="glass-card" style={{
-          padding: '24px',
-          marginBottom: '28px',
-          background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%)',
-          borderColor: 'rgba(16, 185, 129, 0.5)',
+          padding: '20px 24px',
+          marginBottom: '24px',
+          background: '#FAF8F3',
+          border: '1px solid var(--line)',
+          borderLeft: '4px solid var(--ontrack)',
           display: 'flex',
           alignItems: 'center',
           gap: '16px'
         }}>
           <div style={{
-            width: '48px',
-            height: '48px',
+            width: '40px',
+            height: '40px',
             borderRadius: '50%',
-            background: '#10b981',
+            background: 'var(--ontrack)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            flexShrink: 0
           }}>
-            <CheckCircle2 size={30} color="#fff" />
+            <CheckCircle2 size={24} color="#fff" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#f8fafc' }}>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.15rem', fontWeight: 800, color: 'var(--ink)' }}>
               ✓ Recovery Schedule Approved & Dispatched!
             </h3>
-            <p style={{ fontSize: '0.85rem', color: '#cbd5e1' }}>
+            <p style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
               3 extra classes added to CSE-A timetable. Push notifications sent to Dr. Vikramaditya Rao and 58 enrolled students.
             </p>
           </div>
@@ -89,85 +98,90 @@ export default function HodTimetablePage() {
       <div className="glass-card" style={{
         padding: '20px 24px',
         marginBottom: '24px',
-        background: 'rgba(17, 24, 39, 0.8)',
+        background: '#FFFFFF',
+        border: '1px solid var(--line)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px'
       }}>
         <div>
-          <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700 }}>Target Course</span>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#f8fafc' }}>
+          <span style={{ fontSize: '0.72rem', color: 'var(--ink-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.04em' }}>Target Course</span>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', fontWeight: 800, color: 'var(--ink)' }}>
             Operating Systems (CS303 - CSE-A)
           </h2>
         </div>
-        <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>
-          Faculty: <strong style={{ color: '#f8fafc' }}>Dr. Vikramaditya Rao</strong> • <span style={{ color: '#ec4899', fontWeight: 700 }}>3 Extra Slots Required</span>
+        <div style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
+          Faculty: <strong style={{ color: 'var(--ink)' }}>Dr. Vikramaditya Rao</strong> • <span style={{ color: 'var(--atrisk)', fontWeight: 700 }}>3 Extra Slots Required</span>
         </div>
       </div>
 
       {/* Recommended Recovery Slots Grid */}
       <div style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#f8fafc', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Sparkles size={18} color="#818cf8" /> Recommended Conflict-Free Slots
+        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Sparkles size={18} color="var(--brass)" /> Recommended Conflict-Free Slots
         </h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {slots.map((slot) => {
             const isSelected = selectedIds.includes(slot.id);
             return (
               <div
                 key={slot.id}
                 onClick={() => toggleSlot(slot.id)}
-                className="glass-card glass-card-interactive"
                 style={{
-                  padding: '20px',
+                  padding: '18px 20px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   cursor: 'pointer',
-                  border: isSelected ? '2px solid #6366f1' : '1px solid rgba(255, 255, 255, 0.08)',
-                  background: isSelected ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(17, 24, 39, 0.9) 100%)' : 'rgba(17, 24, 39, 0.75)'
+                  borderRadius: '6px',
+                  border: isSelected ? '2px solid var(--ink)' : '1px solid var(--line)',
+                  borderLeft: isSelected ? '4px solid var(--brass)' : '1px solid var(--line)',
+                  background: isSelected ? '#FAF8F3' : '#FFFFFF',
+                  transition: 'all 0.15s ease'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   {/* Selection Checkbox */}
                   <div style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '6px',
-                    border: isSelected ? 'none' : '2px solid #64748b',
-                    background: isSelected ? '#6366f1' : 'transparent',
+                    width: '22px',
+                    height: '22px',
+                    borderRadius: '4px',
+                    border: isSelected ? 'none' : '1px solid var(--line)',
+                    background: isSelected ? 'var(--ink)' : '#FFFFFF',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    {isSelected && <Check size={16} color="#fff" />}
+                    {isSelected && <Check size={14} color="#FAF8F3" />}
                   </div>
 
                   <div>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span>{slot.day}</span>
-                      <span style={{ fontSize: '0.85rem', color: '#818cf8', fontWeight: 600 }}>({slot.startTime} - {slot.endTime})</span>
+                    <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--ink)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontFamily: 'var(--font-serif)' }}>{slot.day}</span>
+                      <span style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontWeight: 600 }}>({slot.startTime} - {slot.endTime})</span>
                     </div>
 
-                    <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '2px' }}>
-                      Venue: <strong style={{ color: '#f8fafc' }}>{slot.room}</strong>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', marginTop: '2px' }}>
+                      Venue: <strong style={{ color: 'var(--ink)' }}>{slot.room}</strong>
                     </div>
                   </div>
                 </div>
 
                 {/* 4 Checkmark Badges */}
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <span className="badge badge-on-track">
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <span className="badge" style={{ background: '#FAF8F3', color: 'var(--ontrack)', border: '1px solid var(--line)' }}>
                     <UserCheck size={12} /> Faculty ✓
                   </span>
-                  <span className="badge badge-on-track">
+                  <span className="badge" style={{ background: '#FAF8F3', color: 'var(--ontrack)', border: '1px solid var(--line)' }}>
                     <Users size={12} /> Students ✓
                   </span>
-                  <span className="badge badge-on-track">
+                  <span className="badge" style={{ background: '#FAF8F3', color: 'var(--ontrack)', border: '1px solid var(--line)' }}>
                     <MapPin size={12} /> Room ✓
                   </span>
-                  <span className="badge badge-on-track">
+                  <span className="badge" style={{ background: '#FAF8F3', color: 'var(--ontrack)', border: '1px solid var(--line)' }}>
                     <CheckCircle2 size={12} /> No Conflict ✓
                   </span>
                 </div>
@@ -178,41 +192,41 @@ export default function HodTimetablePage() {
       </div>
 
       {/* Timetable Visual Grid */}
-      <div className="glass-card" style={{ padding: '24px', marginBottom: '28px' }}>
-        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f8fafc', marginBottom: '16px' }}>
+      <div className="glass-card" style={{ padding: '24px', marginBottom: '28px', background: '#FFFFFF', border: '1px solid var(--line)' }}>
+        <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '16px' }}>
           CSE-A Department Weekly Schedule Matrix
         </h3>
 
         <div style={{
           display: 'grid',
           gridTemplateColumns: '100px repeat(5, 1fr)',
-          gap: '8px',
+          gap: '6px',
           fontSize: '0.78rem',
           textAlign: 'center'
         }}>
           {/* Header Row */}
-          <div style={{ fontWeight: 700, color: '#64748b', padding: '8px' }}>Time</div>
-          <div style={{ fontWeight: 700, color: '#f8fafc', padding: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '6px' }}>Mon</div>
-          <div style={{ fontWeight: 700, color: '#f8fafc', padding: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '6px' }}>Tue</div>
-          <div style={{ fontWeight: 700, color: '#f8fafc', padding: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '6px' }}>Wed</div>
-          <div style={{ fontWeight: 700, color: '#f8fafc', padding: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '6px' }}>Thu</div>
-          <div style={{ fontWeight: 700, color: '#f8fafc', padding: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '6px' }}>Fri</div>
+          <div style={{ fontWeight: 700, color: 'var(--ink-muted)', padding: '8px' }}>Time</div>
+          <div style={{ fontWeight: 700, color: 'var(--ink)', padding: '8px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)' }}>Mon</div>
+          <div style={{ fontWeight: 700, color: 'var(--ink)', padding: '8px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)' }}>Tue</div>
+          <div style={{ fontWeight: 700, color: 'var(--ink)', padding: '8px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)' }}>Wed</div>
+          <div style={{ fontWeight: 700, color: 'var(--ink)', padding: '8px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)' }}>Thu</div>
+          <div style={{ fontWeight: 700, color: 'var(--ink)', padding: '8px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)' }}>Fri</div>
 
           {/* Row 10-11 */}
-          <div style={{ color: '#94a3b8', padding: '12px 0' }}>10:00 - 11:00</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>DBMS</div>
-          <div style={{ padding: '10px', background: 'rgba(99,102,241,0.25)', border: '1px solid #6366f1', borderRadius: '6px', color: '#fff', fontWeight: 700 }}>OS Extra Slot</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>Java</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>AI Lab</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>CN</div>
+          <div style={{ color: 'var(--ink-muted)', padding: '12px 0', fontFamily: 'var(--font-serif)' }}>10:00 - 11:00</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>DBMS</div>
+          <div style={{ padding: '10px', background: '#FAF8F3', border: '1px solid var(--ink)', borderLeft: '3px solid var(--brass)', borderRadius: '4px', color: 'var(--ink)', fontWeight: 700 }}>OS Extra Slot</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>Java</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>AI Lab</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>CN</div>
 
           {/* Row 2-3 */}
-          <div style={{ color: '#94a3b8', padding: '12px 0' }}>02:00 - 03:00</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>Maths</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>CN</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>Library</div>
-          <div style={{ padding: '10px', background: 'rgba(99,102,241,0.25)', border: '1px solid #6366f1', borderRadius: '6px', color: '#fff', fontWeight: 700 }}>OS Extra Slot</div>
-          <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', color: '#cbd5e1' }}>SE</div>
+          <div style={{ color: 'var(--ink-muted)', padding: '12px 0', fontFamily: 'var(--font-serif)' }}>02:00 - 03:00</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>Maths</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>CN</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>Library</div>
+          <div style={{ padding: '10px', background: '#FAF8F3', border: '1px solid var(--ink)', borderLeft: '3px solid var(--brass)', borderRadius: '4px', color: 'var(--ink)', fontWeight: 700 }}>OS Extra Slot</div>
+          <div style={{ padding: '10px', background: 'var(--paper)', borderRadius: '4px', border: '1px solid var(--line)', color: 'var(--ink)' }}>SE</div>
         </div>
       </div>
 
@@ -222,9 +236,9 @@ export default function HodTimetablePage() {
           onClick={handleApprove}
           className="btn-primary"
           disabled={isSubmitting || selectedIds.length === 0}
-          style={{ padding: '14px 28px', fontSize: '1rem', boxShadow: '0 8px 25px rgba(99, 102, 241, 0.4)' }}
+          style={{ padding: '12px 24px', fontSize: '0.95rem' }}
         >
-          <Send size={18} /> {isSubmitting ? 'Dispatching Schedule...' : `Send for Approval (${selectedIds.length} Slots Selected)`}
+          <Send size={16} /> {isSubmitting ? 'Dispatching Schedule...' : `Send for Approval (${selectedIds.length} Slots Selected)`}
         </button>
       </div>
     </AppShell>

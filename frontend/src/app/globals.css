@@ -1,49 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import '../styles/design-tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Outfit', 'Inter', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-numeral: 'Outfit', sans-serif;
 
-  /* Institutional Vignan Palette - Clean Light Theme */
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f1f5f9;
-  
-  --border-color: #e2e8f0;
-  --border-light: #cbd5e1;
+  --bg-dark: var(--bg-main);
+  --bg-primary: var(--bg-surface);
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F8FAFC;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
 
-  --text-primary: #0f172a;
+  --border-color: var(--border-subtle);
+  --border-light: rgba(255, 255, 255, 0.8);
+  --border-glow: var(--purple-primary);
+
+  --text-primary: #1E2333;
   --text-secondary: #475569;
-  --text-muted: #64748b;
+  --text-muted: #64748B;
+  --text-dim: #94A3B8;
 
-  /* Brand Accents */
-  --vignan-red: #e11d48;
-  --vignan-navy: #1e3a8a;
-  --primary-500: #2563eb;
-  --primary-600: #1d4ed8;
-  --primary-gradient: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-  --ai-gradient: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
-
-  /* Status Badges & Indicators */
-  --status-on-track: #059669;
-  --status-on-track-bg: #ecfdf5;
-  --status-on-track-border: #a7f3d0;
-
-  --status-minor: #d97706;
-  --status-minor-bg: #fffbeb;
-  --status-minor-border: #fde68a;
-
-  --status-significant: #ea580c;
-  --status-significant-bg: #fff7ed;
-  --status-significant-border: #ffedd5;
-
-  --status-critical: #dc2626;
-  --status-critical-bg: #fef2f2;
-  --status-critical-border: #fecaca;
-
-  /* Shadows */
-  --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.06);
+  --card-shadow: 0 4px 20px -2px rgba(108, 99, 255, 0.05), 0 2px 6px -1px rgba(30, 35, 51, 0.03);
+  --card-shadow-hover: 0 10px 25px -4px rgba(108, 99, 255, 0.1), 0 4px 10px -2px rgba(30, 35, 51, 0.04);
 }
 
 * {
@@ -54,97 +36,76 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-primary);
+  background-color: #F7F9FC;
+  /* Ambient Multi-Point Light Pastel Glow Background */
+  background-image:
+    radial-gradient(at 0% 0%, rgba(108, 99, 255, 0.045) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(79, 172, 254, 0.045) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(56, 189, 248, 0.035) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(52, 211, 153, 0.025) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
-  line-height: 1.5;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   color: var(--text-primary);
 }
 
-/* Glassmorphic & Corporate Cards */
+/* Glassmorphism Card System */
 .glass-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  box-shadow: var(--card-shadow);
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px -2px rgba(108, 99, 255, 0.04), 0 2px 6px -1px rgba(30, 35, 51, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: var(--border-light);
+  border-color: rgba(108, 99, 255, 0.2);
+}
+
+.glass-card-interactive {
+  cursor: pointer;
 }
 
 .glass-card-interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
-  border-color: #cbd5e1;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 28px -4px rgba(108, 99, 255, 0.09), 0 4px 12px -2px rgba(30, 35, 51, 0.04);
+  border-color: rgba(108, 99, 255, 0.3);
 }
 
-/* Badges */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.badge-on-track {
-  background: var(--status-on-track-bg);
-  color: var(--status-on-track);
-  border: 1px solid var(--status-on-track-border);
-}
-
-.badge-minor {
-  background: var(--status-minor-bg);
-  color: var(--status-minor);
-  border: 1px solid var(--status-minor-border);
-}
-
-.badge-significant {
-  background: var(--status-significant-bg);
-  color: var(--status-significant);
-  border: 1px solid var(--status-significant-border);
-}
-
-.badge-critical {
-  background: var(--status-critical-bg);
-  color: var(--status-critical);
-  border: 1px solid var(--status-critical-border);
-}
-
-/* Buttons */
-.btn-primary {
+/* Primary Action Button (Gradient Fill, Soft Elevation) */
+.btn-primary, .gradient-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 10px;
-  background: var(--primary-gradient);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.9rem;
-  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6C63FF, #4FACFE) !important;
+  color: #FFFFFF !important;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.88rem;
+  border: none !important;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 4px 14px -1px rgba(108, 99, 255, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-primary:hover {
-  opacity: 0.95;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(30, 58, 138, 0.35);
+.btn-primary:hover, .gradient-btn:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px -1px rgba(108, 99, 255, 0.45) !important;
+  background: linear-gradient(135deg, #7B73FF, #5BB5FE) !important;
+  color: #FFFFFF !important;
 }
 
 .btn-secondary {
@@ -152,56 +113,176 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  background: #ffffff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  background: #FFFFFF;
   color: var(--text-primary);
-  font-weight: 700;
-  font-size: 0.9rem;
-  border: 1px solid var(--border-light);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.86rem;
+  border: 1px solid var(--border-subtle);
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 3px rgba(30, 35, 51, 0.04);
+  transition: all 0.15s ease;
 }
 
 .btn-secondary:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
-.btn-ai {
-  background: var(--ai-gradient);
-  color: #fff;
-  font-weight: 700;
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  border: 1px solid transparent;
 }
 
-/* Progress Bars */
+.badge-on-track {
+  color: #059669;
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+}
+
+.badge-minor {
+  color: #D97706;
+  background: #FFFBEB;
+  border-color: #FDE68A;
+}
+
+.badge-significant {
+  color: #EA580C;
+  background: #FFF7ED;
+  border-color: #FED7AA;
+}
+
+.badge-critical {
+  color: #DC2626;
+  background: #FEF2F2;
+  border-color: #FECACA;
+}
+
+.badge-completed {
+  color: #4F46E5;
+  background: #EEF2FF;
+  border-color: #C7D2FE;
+}
+
+.badge-pending {
+  color: #64748B;
+  background: #F1F5F9;
+  border-color: #E2E8F0;
+}
+
+/* Icon Containers with Pastel Backgrounds */
+.icon-container-purple {
+  background: #F0EEFF;
+  color: #6C63FF;
+}
+
+.icon-container-blue {
+  background: #EAF6FF;
+  color: #4FACFE;
+}
+
+.icon-container-cyan {
+  background: #ECFAFF;
+  color: #0284C7;
+}
+
+.icon-container-green {
+  background: #ECFDF5;
+  color: #10B981;
+}
+
+.icon-container-yellow {
+  background: #FFFBEB;
+  color: #D97706;
+}
+
+.icon-container-orange {
+  background: #FFF7ED;
+  color: #EA580C;
+}
+
+.icon-container-pink {
+  background: #FDF2F8;
+  color: #DB2777;
+}
+
+.icon-container-red {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.icon-container-indigo {
+  background: #EEF2FF;
+  color: #4F46E5;
+}
+
+/* Progress Bars with Soft Gradients */
 .progress-bar-bg {
   width: 100%;
-  height: 8px;
-  background: #e2e8f0;
-  border-radius: 9999px;
+  height: 7px;
+  background: #EEF2F6;
+  border-radius: 999px;
   overflow: hidden;
   position: relative;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: 9999px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 999px;
+  transition: width 0.6s ease;
 }
 
-/* Scrollbar Styling */
+.progress-bar-fill.on-track {
+  background: linear-gradient(90deg, #34D399, #10B981);
+}
+
+.progress-bar-fill.minor {
+  background: linear-gradient(90deg, #FCD34D, #FB923C);
+}
+
+.progress-bar-fill.significant {
+  background: linear-gradient(90deg, #FB923C, #F87171);
+}
+
+.progress-bar-fill.critical {
+  background: linear-gradient(90deg, #F87171, #EF4444);
+}
+
+.progress-bar-fill.completed {
+  background: linear-gradient(90deg, #6C63FF, #4FACFE);
+}
+
+/* Numerals */
+.numeral {
+  font-family: var(--font-numeral);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Clean Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: #CBD5E1;
+  border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #94A3B8;
 }

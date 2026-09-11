@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ==========================================================================
+     GLOBAL EXPANDED LIGHT PALETTE
+     ========================================================================== */
+  --bg-main: #F7F9FC;
+  --bg-secondary: #F2F5FA;
+  --bg-surface: #FFFFFF;
+
+  /* Purples */
+  --purple-primary: #6C63FF;
+  --purple-soft: #8B83FF;
+  --purple-light: #F0EEFF;
+
+  /* Blues */
+  --blue-primary: #4FACFE;
+  --blue-soft: #7CC4FF;
+  --blue-light: #EAF6FF;
+
+  /* Cyans */
+  --cyan-primary: #38BDF8;
+  --cyan-light: #ECFAFF;
+
+  /* Greens */
+  --green-primary: #34D399;
+  --green-soft: #6EE7B7;
+  --green-light: #ECFDF5;
+
+  /* Yellows */
+  --yellow-primary: #FBBF24;
+  --yellow-soft: #FCD34D;
+  --yellow-light: #FFFBEB;
+
+  /* Oranges */
+  --orange-primary: #FB923C;
+  --orange-light: #FFF7ED;
+
+  /* Pinks */
+  --pink-primary: #F472B6;
+  --pink-light: #FDF2F8;
+
+  /* Reds */
+  --red-primary: #F87171;
+  --red-light: #FEF2F2;
+
+  /* Indigos */
+  --indigo-primary: #818CF8;
+  --indigo-light: #EEF2FF;
+
+  /* Neutral Texts */
+  --text-primary: #1E2333;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  /* Borders & Dividers */
+  --border-subtle: #E8ECF3;
+  --border-glass: rgba(255, 255, 255, 0.7);
+
+  /* ==========================================================================
+     SOFT GRADIENT SYSTEM
+     ========================================================================== */
+  --grad-primary: linear-gradient(135deg, #6C63FF, #4FACFE);
+  --grad-purple: linear-gradient(135deg, #A78BFA, #818CF8);
+  --grad-blue: linear-gradient(135deg, #7DD3FC, #60A5FA);
+  --grad-green: linear-gradient(135deg, #6EE7B7, #34D399);
+  --grad-sunrise: linear-gradient(135deg, #FCD34D, #FB923C);
+  --grad-pink: linear-gradient(135deg, #F9A8D4, #C4B5FD);
+  --grad-academic: linear-gradient(135deg, #818CF8, #38BDF8, #34D399);
+
+  /* Status Bar Gradients */
+  --grad-ontrack: linear-gradient(90deg, #34D399, #10B981);
+  --grad-atrisk: linear-gradient(90deg, #FCD34D, #FB923C);
+  --grad-critical: linear-gradient(90deg, #F87171, #EF4444);
+  --grad-completed: linear-gradient(90deg, #6C63FF, #4FACFE);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px -2px rgba(30, 35, 51, 0.04), 0 1px 4px -1px rgba(30, 35, 51, 0.02);
+  --shadow-card: 0 4px 20px -2px rgba(108, 99, 255, 0.05), 0 2px 6px -1px rgba(30, 35, 51, 0.03);
+  --shadow-hover: 0 10px 25px -4px rgba(108, 99, 255, 0.1), 0 4px 10px -2px rgba(30, 35, 51, 0.04);
+  --shadow-glow-purple: 0 0 25px -5px rgba(108, 99, 255, 0.25);
+  --shadow-glow-blue: 0 0 25px -5px rgba(79, 172, 254, 0.25);
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+
+  /* Backward Compatibility Aliases */
+  --paper: #FFFFFF;
+  --ink: var(--text-primary);
+  --ink-muted: var(--text-muted);
+  --brass: #6C63FF;
+  --line: var(--border-subtle);
+  --ontrack: var(--green-primary);
+  --monitor: var(--yellow-primary);
+  --atrisk: var(--orange-primary);
+  --critical: var(--red-primary);
+}

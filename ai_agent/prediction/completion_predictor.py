@@ -1,11 +1,10 @@
+from app.services.prediction_service import predict_course_completion
+
 class CompletionPredictor:
-    def predict(self, actual_hours: int, total_hours: int = 60, target_date_days: int = 90) -> dict:
-        velocity = actual_hours / max(1, target_date_days)
-        estimated_total_days = total_hours / max(0.1, velocity)
-        delay_days = max(0, int(estimated_total_days - target_date_days))
-        
-        return {
-            "velocity": round(velocity, 2),
-            "estimated_total_days": int(estimated_total_days),
-            "delay_days": delay_days
-        }
+    def predict(self, actual_hours: int = None, total_hours: int = 60, target_date_days: int = 90, course_id_or_code: str = None) -> dict:
+        return predict_course_completion(
+            course_id_or_code=course_id_or_code,
+            actual_hours=actual_hours,
+            total_hours=total_hours,
+            target_date_days=target_date_days
+        )

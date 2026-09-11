@@ -15,6 +15,14 @@ INSERT INTO faculty (id, user_id, name, email, department, designation) VALUES
 ('fac-103', 'user-fac3', 'Dr. Vikramaditya Rao', 'dr.vikram@vignan.edu.in', 'Computer Science & Engineering', 'Associate Professor'),
 ('fac-104', 'user-fac4', 'Prof. Suresh Verma', 'prof.suresh@vignan.edu.in', 'Computer Science & Engineering', 'Assistant Professor');
 
+-- 2.1 STUDENTS
+INSERT INTO students (id, name, roll_number, department, section, email) VALUES
+('std-101', 'Kavya Reddy', '231FA04001', 'Computer Science & Engineering', 'CSE-A', 'kavya.231fa04001@vignan.edu.in'),
+('std-102', 'Sai Teja Varma', '231FA04002', 'Computer Science & Engineering', 'CSE-A', 'saiteja.231fa04002@vignan.edu.in'),
+('std-103', 'Ananya Chowdary', '231FA04003', 'Computer Science & Engineering', 'CSE-B', 'ananya.231fa04003@vignan.edu.in'),
+('std-104', 'Rahul Namburi', '231FA04004', 'Computer Science & Engineering', 'CSE-B', 'rahul.231fa04004@vignan.edu.in'),
+('std-105', 'Mounika Rao', '231FA04005', 'Computer Science & Engineering', 'CSE-C', 'mounika.231fa04005@vignan.edu.in');
+
 -- 3. COURSES
 INSERT INTO courses (id, code, name, department, section, faculty_id, total_hours, completed_hours, expected_percentage, actual_percentage, risk_level, risk_score, predicted_completion_date, planned_completion_date, delay_days) VALUES
 ('course-dbms-a', 'CS301', 'Database Management Systems', 'Computer Science & Engineering', 'CSE-A', 'fac-101', 60, 55, 90.0, 92.0, 'ON_TRACK', 12, 'December 08, 2026', 'December 10, 2026', -2),

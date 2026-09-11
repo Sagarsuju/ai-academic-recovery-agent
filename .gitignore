@@ -8,6 +8,8 @@ ENV/
 .env
 academic_recovery.db
 *.db
+chroma_data/
+*.sqlite3
 
 # Node / Next.js
 node_modules/
