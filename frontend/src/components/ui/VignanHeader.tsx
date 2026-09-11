@@ -62,7 +62,7 @@ export default function VignanHeader({ currentRole, onRoleChange, unreadNotifica
             alignItems: 'center'
           }}>
             <img 
-              src="/vignans-university-logo.png" 
+              src="/vignan.png" 
               alt="Vignan University Logo" 
               style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
             />

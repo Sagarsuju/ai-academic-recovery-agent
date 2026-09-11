@@ -143,7 +143,7 @@ export default function PublicLandingPage() {
           {/* Vignan's University Official Branding Logo */}
           <div className="flex items-center">
             <img
-              src="/vignans-university-logo.png"
+              src="/vignan.png"
               alt="Vignan's Foundation for Science, Technology and Research"
               className="h-10 sm:h-12 md:h-14 w-auto object-contain max-w-[280px] sm:max-w-[360px] md:max-w-[460px]"
             />
