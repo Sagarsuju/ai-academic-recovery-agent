@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: academic_recovery_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-academic_recovery}
+    ports:
+      - "5432:5432"
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: academic_recovery_chroma
+    ports:
+      - "8000:8000"

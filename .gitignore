@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env
+academic_recovery.db
+*.db
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
