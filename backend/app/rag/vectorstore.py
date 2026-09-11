@@ -8,14 +8,12 @@ custom_chroma_path = os.getenv("CHROMA_PATH")
 CHROMA_DATA_DIR = os.path.abspath(custom_chroma_path) if custom_chroma_path else os.path.join(RAG_DIR, "chroma_data")
 os.makedirs(CHROMA_DATA_DIR, exist_ok=True)
 
-# Initialize SentenceTransformer offline embedding function (all-MiniLM-L6-v2)
+# Initialize DefaultEmbeddingFunction (ONNX-based all-MiniLM-L6-v2, memory-efficient < 50MB)
 try:
-    embedding_func = embedding_functions.SentenceTransformerEmbeddingFunction(
-        model_name="all-MiniLM-L6-v2"
-    )
-except Exception as e:
-    print(f"Note: Falling back to DefaultEmbeddingFunction due to: {e}")
     embedding_func = embedding_functions.DefaultEmbeddingFunction()
+except Exception as e:
+    print(f"Note: DefaultEmbeddingFunction error ({e}); using None")
+    embedding_func = None
 
 # Persistent ChromaDB Client
 client = chromadb.PersistentClient(path=CHROMA_DATA_DIR)
