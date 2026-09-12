@@ -61,9 +61,9 @@ export default function VignanHeader({ currentRole, onRoleChange, unreadNotifica
             display: 'flex',
             alignItems: 'center'
           }}>
-            <img 
-              src="/vignan.png" 
-              alt="Vignan University Logo" 
+            <img
+              src="/logo.png"
+              alt="Vignan University Logo"
               style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
             />
           </div>
@@ -117,9 +117,9 @@ export default function VignanHeader({ currentRole, onRoleChange, unreadNotifica
             display: 'flex',
             alignItems: 'center'
           }}>
-            <img 
-              src="/accreditation_badges.jpg" 
-              alt="Vignan Accreditation Badges" 
+            <img
+              src="/accreditation_badges.jpg"
+              alt="Vignan Accreditation Badges"
               style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
             />
           </div>

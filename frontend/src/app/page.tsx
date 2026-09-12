@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
@@ -12,7 +12,6 @@ import {
   ShieldCheck,
   Cpu,
   Bot,
-  Layers,
   Database,
   Users,
   GraduationCap,
@@ -20,7 +19,9 @@ import {
   UserCheck,
   CheckCircle2,
   BookOpen,
-  Award
+  MapPin,
+  Award,
+  Layers
 } from 'lucide-react';
 
 const HOW_IT_WORKS_STEPS = [
@@ -105,32 +106,16 @@ const AGENTS = [
   }
 ];
 
-// Interactive 3D Knowledge Network Overlay Nodes
-const GRAPH_NODES = [
-  { label: 'Students', x: '18%', y: '22%', color: '#38BDF8', size: 10 },
-  { label: 'Courses', x: '45%', y: '15%', color: '#6C63FF', size: 12 },
-  { label: 'Syllabus', x: '82%', y: '28%', color: '#F59E0B', size: 11 },
-  { label: 'Attendance', x: '12%', y: '68%', color: '#10B981', size: 10 },
-  { label: 'Remedial', x: '52%', y: '82%', color: '#EC4899', size: 13 },
-  { label: 'Exams', x: '85%', y: '75%', color: '#0284C7', size: 11 }
-];
-
 export default function PublicLandingPage() {
   const [isPlayingIntro, setIsPlayingIntro] = useState(true);
 
-  // Mouse Parallax Motion Values
+  // Parallax mouse movement handler
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   const springConfig = { damping: 25, stiffness: 120 };
   const parallaxXBg = useSpring(useTransform(mouseX, [-500, 500], [-8, 8]), springConfig);
   const parallaxYBg = useSpring(useTransform(mouseY, [-500, 500], [-8, 8]), springConfig);
-
-  const parallaxXMid = useSpring(useTransform(mouseX, [-500, 500], [-18, 18]), springConfig);
-  const parallaxYMid = useSpring(useTransform(mouseY, [-500, 500], [-18, 18]), springConfig);
-
-  const parallaxXFore = useSpring(useTransform(mouseX, [-500, 500], [-30, 30]), springConfig);
-  const parallaxYFore = useSpring(useTransform(mouseY, [-500, 500], [-30, 30]), springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
@@ -140,11 +125,18 @@ export default function PublicLandingPage() {
   };
 
   return (
-    <div 
+    <div
       onMouseMove={handleMouseMove}
-      className="min-h-screen text-[#1E2333] relative overflow-hidden" 
-      style={{ backgroundColor: '#F7F9FC', fontFamily: 'var(--font-sans)' }}
+      className="min-h-screen text-[#1E2333] relative overflow-hidden bg-[#F4F7FC] font-sans"
     >
+      {/* Google Font for Cursive Calligraphy Overlay */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        .font-cursive {
+          font-family: 'Caveat', cursive, sans-serif;
+        }
+      `}</style>
+
       {/* Intro Video Fullscreen Overlay */}
       {isPlayingIntro && (
         <div style={{
@@ -202,353 +194,386 @@ export default function PublicLandingPage() {
         </div>
       )}
 
-      {/* BACKGROUND DEPTH LAYER */}
-      <motion.div 
+      {/* Ambient Radial Background Glows */}
+      <motion.div
         style={{ x: parallaxXBg, y: parallaxYBg }}
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-0"
       >
-        <div className="absolute top-0 left-0 w-[650px] h-[650px] rounded-full bg-[radial-gradient(circle,rgba(167,139,250,0.18)_0%,transparent_70%)] blur-3xl" />
-        <div className="absolute top-10 right-0 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(79,172,254,0.18)_0%,transparent_70%)] blur-3xl" />
-        <div className="absolute top-[800px] left-1/4 w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.14)_0%,transparent_70%)] blur-3xl" />
-        <div className="absolute top-[1400px] right-10 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(52,211,153,0.14)_0%,transparent_70%)] blur-3xl" />
-        
-        {/* Faint Architectural Grid Texture */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(108, 99, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(108, 99, 255, 0.025) 1px, transparent 1px)',
-            backgroundSize: '48px 48px'
-          }}
-        />
+        <div className="absolute top-[-100px] left-[-100px] w-[750px] h-[750px] rounded-full bg-[radial-gradient(circle,rgba(224,231,255,0.7)_0%,rgba(244,247,252,0)_70%)] blur-3xl" />
+        <div className="absolute top-[-50px] right-[-100px] w-[850px] h-[850px] rounded-full bg-[radial-gradient(circle,rgba(219,234,254,0.7)_0%,rgba(244,247,252,0)_70%)] blur-3xl" />
+        <div className="absolute top-[40%] left-[30%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(207,250,254,0.5)_0%,rgba(244,247,252,0)_70%)] blur-3xl" />
       </motion.div>
 
-      {/* Top Header */}
-      <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-[#E8ECF3] shadow-xs">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          {/* Top Left Vignan's University Official Logo */}
-          <Link href="/" className="flex items-center justify-start text-decoration-none">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#E2E8F0] shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
             <img
               src="/logo.png"
               alt="Vignan's Foundation for Science, Technology and Research"
-              className="h-10 sm:h-12 md:h-14 w-auto object-contain max-w-[280px] sm:max-w-[380px] md:max-w-[480px]"
+              className="h-10 sm:h-12 w-auto object-contain max-w-[260px] sm:max-w-[380px]"
             />
           </Link>
 
-          {/* Nav & Login CTA */}
+          {/* Center Navigation Links */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#475569]">
+            <a href="#" className="text-[#3B82F6] font-bold border-b-2 border-[#3B82F6] pb-1">
+              Home
+            </a>
+            <a href="#features" className="hover:text-[#3B82F6] transition">
+              Features
+            </a>
+            <a href="#how-it-works" className="hover:text-[#3B82F6] transition">
+              How It Works
+            </a>
+            <a href="#about" className="hover:text-[#3B82F6] transition">
+              About
+            </a>
+            <a href="#contact" className="hover:text-[#3B82F6] transition">
+              Contact
+            </a>
+          </nav>
+
+          {/* Right CTAs */}
           <div className="flex items-center gap-3">
             <Link
               href="/login"
-              className="text-xs font-semibold text-[#475569] hover:text-[#6C63FF] px-3.5 py-2 rounded-lg transition"
+              className="text-xs sm:text-sm font-semibold text-[#475569] hover:text-[#3B82F6] px-3 py-2 transition hidden sm:inline-block"
             >
               Role Access
             </Link>
             <Link
               href="/login"
-              className="btn-primary gradient-btn text-xs font-semibold px-4.5 py-2.5 rounded-xl"
+              className="bg-gradient-to-r from-[#4F46E5] to-[#3B82F6] hover:from-[#4338CA] hover:to-[#2563EB] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full shadow-md hover:shadow-indigo-500/30 transition flex items-center gap-1.5"
             >
-              Sign In to Portal <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              <span>Sign In to Portal</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       </header>
 
-      {/* IMMERSIVE 3D HERO SECTION */}
-      <section className="relative overflow-hidden pt-12 pb-24 px-6 border-b border-[#E8ECF3]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* LEFT HERO CONTENT */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 space-y-6 z-10"
-          >
+      {/* HERO SECTION */}
+      <section className="relative pt-8 pb-16 px-4 sm:px-6 max-w-7xl mx-auto z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+          {/* LEFT COLUMN: Content & Stat Cards */}
+          <div className="lg:col-span-6 space-y-6">
+
             {/* Top Pill Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#E0DBFF] text-xs font-bold text-[#6C63FF] shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#6C63FF]" />
-              Autonomous Academic Recovery & Syllabus Intelligence
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-[#CBD5E1] text-xs font-bold text-[#4338CA] shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#4F46E5]" />
+              <span>Autonomous Academic Recovery & Syllabus Intelligence</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#1E2333] leading-[1.18]" style={{ fontFamily: 'var(--font-heading)' }}>
+            {/* Main Title */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[2.75rem] font-extrabold text-[#0F172A] tracking-tight leading-[1.15]">
               Intelligent syllabus tracking & remedial recovery powered by{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6C63FF] via-[#4FACFE] to-[#38BDF8]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] via-[#3B82F6] to-[#06B6D4]">
                 multi-agent AI
               </span>
             </h1>
 
-            {/* Supporting Description */}
-            <p className="text-base sm:text-lg text-[#64748B] leading-relaxed">
+            {/* Subtitle */}
+            <p className="text-base text-[#475569] leading-relaxed max-w-xl">
               Detect course deficits weeks ahead of examinations, formulate personalized remedial class schedules, and resolve timetable conflicts automatically.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Link href="/login" className="btn-primary gradient-btn text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg hover:shadow-indigo-500/25 transition">
-                Launch Academic Workstation <ArrowRight className="w-4 h-4 ml-1" />
+            {/* Dual Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-1">
+              <Link
+                href="/login"
+                className="bg-gradient-to-r from-[#4F46E5] to-[#3B82F6] hover:from-[#4338CA] hover:to-[#2563EB] text-white text-sm font-bold px-6 py-3.5 rounded-full shadow-lg shadow-indigo-500/25 transition flex items-center gap-2"
+              >
+                <span>Launch Academic Workstation</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/login?role=STUDENT"
-                className="btn-secondary text-sm font-semibold px-6 py-3.5 rounded-xl border border-[#CBD5E1] bg-white hover:bg-[#F8FAFC] text-[#334155] transition"
+                className="bg-white hover:bg-[#F8FAFC] text-[#334155] border border-[#CBD5E1] text-sm font-bold px-6 py-3.5 rounded-full shadow-xs transition"
               >
                 Student Portal
               </Link>
             </div>
 
-            {/* 3D Floating Glass Metric Cards */}
-            <motion.div 
-              style={{ x: parallaxXFore, y: parallaxYFore }}
-              className="grid grid-cols-3 gap-4 pt-6 border-t border-[#E8ECF3]"
-            >
-              <motion.div 
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E8ECF3] shadow-md hover:border-[#6C63FF] transition"
-              >
-                <div className="flex items-center gap-1.5 text-xs text-[#64748B] mb-1 font-semibold">
-                  <Database className="w-3.5 h-3.5 text-[#6C63FF]" /> RAG Engine
+            {/* Stat Cards Horizontal Strip */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-[#E2E8F0]">
+              {/* Stat 1 */}
+              <div className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E2E8F0] shadow-sm flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#F0EEFF] flex items-center justify-center shrink-0">
+                  <Database className="w-5 h-5 text-[#4F46E5]" />
                 </div>
-                <div className="text-2xl font-extrabold text-[#6C63FF]" style={{ fontFamily: 'var(--font-heading)' }}>100%</div>
-                <div className="text-[11px] text-[#64748B] mt-0.5 font-medium">Offline ChromaDB RAG</div>
-              </motion.div>
-
-              <motion.div 
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E8ECF3] shadow-md hover:border-[#0284C7] transition"
-              >
-                <div className="flex items-center gap-1.5 text-xs text-[#64748B] mb-1 font-semibold">
-                  <Cpu className="w-3.5 h-3.5 text-[#0284C7]" /> Orchestration
+                <div>
+                  <div className="text-xl font-extrabold text-[#4F46E5]">100%</div>
+                  <div className="text-[11px] text-[#64748B] font-semibold">Offline ChromaDB RAG</div>
                 </div>
-                <div className="text-2xl font-extrabold text-[#0284C7]" style={{ fontFamily: 'var(--font-heading)' }}>5 Agents</div>
-                <div className="text-[11px] text-[#64748B] mt-0.5 font-medium">LangGraph Pipeline</div>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E8ECF3] shadow-md hover:border-[#10B981] transition"
-              >
-                <div className="flex items-center gap-1.5 text-xs text-[#64748B] mb-1 font-semibold">
-                  <Calendar className="w-3.5 h-3.5 text-[#10B981]" /> Scheduler
+              {/* Stat 2 */}
+              <div className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E2E8F0] shadow-sm flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] flex items-center justify-center shrink-0">
+                  <Users className="w-5 h-5 text-[#0284C7]" />
                 </div>
-                <div className="text-2xl font-extrabold text-[#10B981]" style={{ fontFamily: 'var(--font-heading)' }}>0 Conflicts</div>
-                <div className="text-[11px] text-[#64748B] mt-0.5 font-medium">Timetable Allocator</div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* RIGHT HERO SIDE: 3D ORGANIC COLLAGE OF 4 CAMPUS PHOTOS + AI MESH + ROBOT */}
-          <div className="lg:col-span-6 relative min-h-[500px] flex items-center justify-center">
-            
-            {/* MIDDLE DEPTH LAYER: Organic Layered Collage of 4 Campus Photos */}
-            <motion.div 
-              style={{ x: parallaxXMid, y: parallaxYMid }}
-              className="relative w-full h-[480px] max-w-[560px] mx-auto"
-            >
-              {/* Photo 1 (Main Background Base): Courtyard */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
-                className="absolute inset-x-4 top-6 bottom-6 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/80 bg-white/40 backdrop-blur-sm"
-              >
-                <img 
-                  src="/campus/courtyard.jpg" 
-                  alt="Vignan Campus Courtyard" 
-                  className="w-full h-full object-cover filter brightness-[0.95] contrast-[1.05]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-5 bg-white/90 backdrop-blur-md border border-white/80 px-3 py-1 rounded-full shadow-md text-[11px] font-bold text-[#0F172A] flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#10B981]" /> Campus Life
+                <div>
+                  <div className="text-xl font-extrabold text-[#0284C7]">5 Agents</div>
+                  <div className="text-[11px] text-[#64748B] font-semibold">LangGraph Pipeline</div>
                 </div>
-              </motion.div>
+              </div>
 
-              {/* Photo 2 (Floating Glass Card Top Right): Vignan Foundation Building */}
-              <motion.div
-                animate={{ y: [0, -8, 0], rotate: [2, 1, 2] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-2 right-0 w-[240px] h-[155px] rounded-2xl overflow-hidden shadow-xl border-2 border-white/90 bg-white/80 backdrop-blur-md z-20 hover:scale-105 transition duration-300"
-              >
-                <img 
-                  src="/campus/foundation.jpg" 
-                  alt="Vignan Foundation Building" 
-                  className="w-full h-full object-cover filter brightness-[0.98]"
-                />
-                <div className="absolute bottom-2 left-3 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-[#6C63FF]">
-                  Innovation
+              {/* Stat 3 */}
+              <div className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E2E8F0] shadow-sm flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] flex items-center justify-center shrink-0">
+                  <Calendar className="w-5 h-5 text-[#10B981]" />
                 </div>
-              </motion.div>
-
-              {/* Photo 3 (Floating Glass Card Bottom Left): Orange Building / I Love Vignan */}
-              <motion.div
-                animate={{ y: [0, 8, 0], rotate: [-3, -1, -3] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-4 left-0 w-[230px] h-[150px] rounded-2xl overflow-hidden shadow-xl border-2 border-white/90 bg-white/80 backdrop-blur-md z-20 hover:scale-105 transition duration-300"
-              >
-                <img 
-                  src="/campus/ilovevignan.jpg" 
-                  alt="Vignan Campus Orange Building" 
-                  className="w-full h-full object-cover filter brightness-[0.98]"
-                />
-                <div className="absolute bottom-2 left-3 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-[#EA580C]">
-                  Academic Hub
+                <div>
+                  <div className="text-xl font-extrabold text-[#10B981]">0 Conflicts</div>
+                  <div className="text-[11px] text-[#64748B] font-semibold">Timetable Allocator</div>
                 </div>
-              </motion.div>
-
-              {/* Photo 4 (Floating Glass Card Center-Right Overlay): Aryabhatta Bhavan */}
-              <motion.div
-                animate={{ y: [0, -6, 0], rotate: [-1, 2, -1] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute top-1/2 -right-4 -translate-y-1/2 w-[210px] h-[140px] rounded-2xl overflow-hidden shadow-2xl border-2 border-white/90 bg-white/80 backdrop-blur-md z-20 hover:scale-105 transition duration-300"
-              >
-                <img 
-                  src="/campus/aryabhatta.jpg" 
-                  alt="Aryabhatta Bhavan Vignan Campus" 
-                  className="w-full h-full object-cover filter brightness-[0.98]"
-                />
-                <div className="absolute bottom-2 left-3 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-[#0284C7]">
-                  Research
-                </div>
-              </motion.div>
-
-              {/* FOREGROUND DEPTH LAYER: 3D Knowledge Graph Network Overlay */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible">
-                {/* Connecting Lines */}
-                <line x1="20%" y1="22%" x2="45%" y2="15%" stroke="rgba(56, 189, 248, 0.6)" strokeWidth="1.5" strokeDasharray="3 3" />
-                <line x1="45%" y1="15%" x2="82%" y2="28%" stroke="rgba(108, 99, 255, 0.6)" strokeWidth="1.5" strokeDasharray="3 3" />
-                <line x1="12%" y1="68%" x2="52%" y2="82%" stroke="rgba(16, 185, 129, 0.6)" strokeWidth="1.5" strokeDasharray="3 3" />
-                <line x1="52%" y1="82%" x2="85%" y2="75%" stroke="rgba(236, 72, 153, 0.6)" strokeWidth="1.5" strokeDasharray="3 3" />
-                <line x1="45%" y1="15%" x2="52%" y2="82%" stroke="rgba(245, 158, 11, 0.5)" strokeWidth="1" strokeDasharray="2 2" />
-
-                {GRAPH_NODES.map((node, i) => (
-                  <g key={i}>
-                    <circle 
-                      cx={node.x} 
-                      cy={node.y} 
-                      r={node.size} 
-                      fill={node.color} 
-                      fillOpacity="0.85" 
-                      className="animate-pulse" 
-                    />
-                    <circle 
-                      cx={node.x} 
-                      cy={node.y} 
-                      r={node.size + 4} 
-                      fill="none" 
-                      stroke={node.color} 
-                      strokeWidth="1.5" 
-                      strokeOpacity="0.5" 
-                    />
-                  </g>
-                ))}
-              </svg>
-
-              {/* 3D ACADEMIC AI ROBOT MASCOT SITTING ON A STACK OF BOOKS */}
-              <motion.div 
-                style={{ x: parallaxXFore, y: parallaxYFore }}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-1/3 left-6 z-40 flex flex-col items-center pointer-events-none drop-shadow-2xl"
-              >
-                {/* Robot Floating Speech Bubble */}
-                <div className="bg-white/95 backdrop-blur-md border border-[#E0DBFF] px-3 py-1 rounded-full shadow-lg text-[11px] font-extrabold text-[#4C1D95] mb-1 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-[#6C63FF]" /> AI Assistant Active
-                </div>
-
-                {/* Robot SVG Avatar */}
-                <div className="relative w-28 h-32">
-                  <svg viewBox="0 0 160 180" className="w-full h-full overflow-visible">
-                    <defs>
-                      <linearGradient id="rBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#FFFFFF" />
-                        <stop offset="70%" stopColor="#F1F5F9" />
-                        <stop offset="100%" stopColor="#CBD5E1" />
-                      </linearGradient>
-                      <radialGradient id="rEyeGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#38BDF8" />
-                        <stop offset="100%" stopColor="#0284C7" />
-                      </radialGradient>
-                    </defs>
-
-                    {/* Antenna */}
-                    <line x1="80" y1="30" x2="80" y2="12" stroke="#94A3B8" strokeWidth="3" />
-                    <circle cx="80" cy="10" r="5" fill="#38BDF8" className="animate-ping" />
-
-                    {/* Graduation Cap */}
-                    <polygon points="80,12 110,22 80,32 50,22" fill="#1E293B" />
-                    <rect x="68" y="27" width="24" height="8" rx="2" fill="#0F172A" />
-                    <line x1="105" y1="22" x2="108" y2="38" stroke="#F59E0B" strokeWidth="2" />
-                    <circle cx="108" cy="40" r="2.5" fill="#F59E0B" />
-
-                    {/* Head */}
-                    <rect x="42" y="32" width="76" height="50" rx="20" fill="url(#rBody)" stroke="#94A3B8" strokeWidth="1.5" />
-                    {/* Visor Screen */}
-                    <rect x="50" y="40" width="60" height="34" rx="14" fill="#0F172A" />
-                    
-                    {/* Eyes (Animated Blink) */}
-                    <g style={{ animation: 'eyeBlink 4s infinite' }}>
-                      <ellipse cx="68" cy="56" rx="7" ry="8" fill="url(#rEyeGlow)" />
-                      <circle cx="66" cy="54" r="2.5" fill="#FFFFFF" />
-                      <ellipse cx="92" cy="56" rx="7" ry="8" fill="url(#rEyeGlow)" />
-                      <circle cx="90" cy="54" r="2.5" fill="#FFFFFF" />
-                    </g>
-
-                    {/* Torso */}
-                    <rect x="48" y="86" width="64" height="48" rx="22" fill="url(#rBody)" stroke="#94A3B8" strokeWidth="1.5" />
-                    <circle cx="80" cy="110" r="10" fill="#F0F9FF" stroke="#38BDF8" strokeWidth="1.5" />
-                    <circle cx="80" cy="110" r="5" fill="#38BDF8" />
-
-                    {/* Sitting Legs Hanging */}
-                    <rect x="60" y="132" width="12" height="24" rx="6" fill="url(#rBody)" />
-                    <rect x="88" y="132" width="12" height="24" rx="6" fill="url(#rBody)" />
-                  </svg>
-                </div>
-
-                {/* Stack of Academic Books (SUCCEED, IMPROVE, PRACTICE, LEARN) */}
-                <div className="flex flex-col items-center -mt-3 gap-0.5">
-                  <div className="w-24 h-4 rounded-sm bg-[#6C63FF] text-white text-[9px] font-extrabold flex items-center justify-center shadow-xs">
-                    SUCCEED
-                  </div>
-                  <div className="w-26 h-4 rounded-sm bg-[#38BDF8] text-white text-[9px] font-extrabold flex items-center justify-center shadow-xs">
-                    IMPROVE
-                  </div>
-                  <div className="w-28 h-4 rounded-sm bg-[#F59E0B] text-white text-[9px] font-extrabold flex items-center justify-center shadow-xs">
-                    PRACTICE
-                  </div>
-                  <div className="w-30 h-4 rounded-sm bg-[#10B981] text-white text-[9px] font-extrabold flex items-center justify-center shadow-xs">
-                    LEARN
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
           </div>
-        </div>
 
-        {/* ELEGANT TRANSLUCENT FLOWING WAVE BOUNDARY */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none overflow-hidden">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-full opacity-40">
-            <path 
-              d="M0,0 C150,90 350,-40 500,50 C650,140 900,10 1200,40 L1200,120 L0,120 Z" 
-              fill="url(#waveGrad)" 
-            />
-            <defs>
-              <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#6C63FF" />
-                <stop offset="50%" stopColor="#38BDF8" />
-                <stop offset="100%" stopColor="#34D399" />
-              </linearGradient>
-            </defs>
-          </svg>
+          {/* RIGHT COLUMN: 3D Robot + Organic Campus Photo Collage */}
+          <div className="lg:col-span-6 relative min-h-[460px] sm:min-h-[520px] flex items-center justify-center">
+
+            {/* Calligraphic Handwriting Quotes (Positioned around hero visual) */}
+            <div className="absolute top-2 left-6 z-30 font-cursive text-2xl text-[#3B82F6] font-bold opacity-80 pointer-events-none transform -rotate-6">
+              Learn<br />Grow<br />Achieve
+            </div>
+            <div className="absolute top-6 right-2 z-30 font-cursive text-2xl text-[#3B82F6] font-bold opacity-85 pointer-events-none transform rotate-3">
+              A Brighter<br />Tomorrow
+            </div>
+            <div className="absolute bottom-16 left-2 z-30 font-cursive text-xl text-[#3B82F6] font-bold opacity-80 pointer-events-none transform -rotate-3">
+              Better<br />Students<br />Brighter<br />Futures
+            </div>
+            <div className="absolute bottom-4 right-6 z-30 font-cursive text-2xl text-[#3B82F6] font-bold opacity-85 pointer-events-none transform rotate-2">
+              From<br />Knowledge<br />to Impact
+            </div>
+
+            {/* Decorative Dot Matrix Patterns */}
+            <div className="absolute top-4 right-12 w-16 h-16 grid grid-cols-4 gap-1.5 opacity-30 pointer-events-none z-0">
+              {[...Array(16)].map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#3B82F6]" />
+              ))}
+            </div>
+
+            {/* CENTER MASCOT: 3D AI Robot Waving on Stack of Books */}
+            <div className="absolute top-1/2 left-2 sm:left-6 -translate-y-1/2 z-40 flex flex-col items-center drop-shadow-xl pointer-events-none">
+              {/* Cute 3D AI Robot Avatar */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative w-28 h-32 flex flex-col items-center justify-center"
+              >
+                <svg viewBox="0 0 160 180" className="w-full h-full overflow-visible">
+                  <defs>
+                    <linearGradient id="rBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFFFFF" />
+                      <stop offset="60%" stopColor="#F1F5F9" />
+                      <stop offset="100%" stopColor="#CBD5E1" />
+                    </linearGradient>
+                    <radialGradient id="rEyeGlowGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#38BDF8" />
+                      <stop offset="100%" stopColor="#0284C7" />
+                    </radialGradient>
+                  </defs>
+
+                  {/* Antenna */}
+                  <line x1="80" y1="30" x2="80" y2="14" stroke="#94A3B8" strokeWidth="3" />
+                  <circle cx="80" cy="10" r="5" fill="#38BDF8" className="animate-ping" />
+
+                  {/* Graduation Cap */}
+                  <polygon points="80,12 112,22 80,32 48,22" fill="#1E293B" />
+                  <rect x="68" y="27" width="24" height="8" rx="2" fill="#0F172A" />
+                  <line x1="106" y1="22" x2="110" y2="38" stroke="#F59E0B" strokeWidth="2" />
+                  <circle cx="110" cy="40" r="3" fill="#F59E0B" />
+
+                  {/* Head */}
+                  <rect x="42" y="32" width="76" height="52" rx="22" fill="url(#rBodyGrad)" stroke="#94A3B8" strokeWidth="1.5" />
+                  {/* Visor Screen */}
+                  <rect x="50" y="40" width="60" height="34" rx="14" fill="#0F172A" />
+
+                  {/* Waving Arm (Left) */}
+                  <motion.g
+                    animate={{ rotate: [0, 20, 0, 20, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{ transformOrigin: '38px 90px' }}
+                  >
+                    <path d="M 40 92 Q 22 75 25 58" stroke="url(#rBodyGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+                    <circle cx="25" cy="56" r="6" fill="#38BDF8" />
+                  </motion.g>
+
+                  {/* Right Arm resting */}
+                  <path d="M 120 92 Q 132 105 130 115" stroke="url(#rBodyGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+
+                  {/* Eyes */}
+                  <g>
+                    <ellipse cx="68" cy="56" rx="7" ry="8" fill="url(#rEyeGlowGrad)" />
+                    <circle cx="66" cy="54" r="2.5" fill="#FFFFFF" />
+                    <ellipse cx="92" cy="56" rx="7" ry="8" fill="url(#rEyeGlowGrad)" />
+                    <circle cx="90" cy="54" r="2.5" fill="#FFFFFF" />
+                  </g>
+
+                  {/* Body Torso */}
+                  <rect x="48" y="86" width="64" height="48" rx="22" fill="url(#rBodyGrad)" stroke="#94A3B8" strokeWidth="1.5" />
+                  {/* Center Emblem */}
+                  <circle cx="80" cy="110" r="9" fill="#F0F9FF" stroke="#38BDF8" strokeWidth="1.5" />
+                  <circle cx="80" cy="110" r="4" fill="#38BDF8" />
+
+                  {/* Legs */}
+                  <rect x="60" y="132" width="12" height="20" rx="5" fill="url(#rBodyGrad)" />
+                  <rect x="88" y="132" width="12" height="20" rx="5" fill="url(#rBodyGrad)" />
+                </svg>
+              </motion.div>
+
+              {/* Stack of 4 Books */}
+              <div className="flex flex-col items-center -mt-2 gap-1 w-28">
+                <div className="w-24 h-5 rounded-sm bg-[#4F46E5] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  Learn
+                </div>
+                <div className="w-26 h-5 rounded-sm bg-[#3B82F6] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  Practice
+                </div>
+                <div className="w-28 h-5 rounded-sm bg-[#0EA5E9] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  Improve
+                </div>
+                <div className="w-30 h-5 rounded-sm bg-[#10B981] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  Succeed
+                </div>
+              </div>
+            </div>
+
+            {/* CAMPUS PHOTO COLLAGE (Curved Multi-Photo Organic Composition) */}
+            <div className="relative w-full h-[450px] max-w-[540px] ml-auto">
+
+              {/* Top-Right Large Photo: Campus Life (Courtyard) */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="absolute top-0 right-0 w-[62%] h-[50%] rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-white z-10"
+              >
+                <img
+                  src="/campus/courtyard.jpg"
+                  alt="Vignan Campus Courtyard"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
+                  <MapPin className="w-3.5 h-3.5 text-[#3B82F6]" />
+                  <span>Campus Life</span>
+                </div>
+              </motion.div>
+
+              {/* Top-Left Center Photo: Knowledge (Foundation Building) */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="absolute top-10 left-12 w-[52%] h-[42%] rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-white z-20"
+              >
+                <img
+                  src="/campus/foundation.jpg"
+                  alt="Vignan Foundation Building"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
+                  <BookOpen className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <span>Knowledge</span>
+                </div>
+              </motion.div>
+
+              {/* Middle-Right Photo: Innovation (I Love Vignan) */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="absolute top-[42%] right-2 w-[48%] h-[38%] rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-white z-25"
+              >
+                <img
+                  src="/campus/ilovevignan.jpg"
+                  alt="I Love Vignan Campus"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
+                  <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>Innovation</span>
+                </div>
+              </motion.div>
+
+              {/* Bottom-Center Photo: Research (Aryabhatta Bhavan) */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="absolute bottom-0 left-20 w-[60%] h-[48%] rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-white z-30"
+              >
+                <img
+                  src="/campus/aryabhatta.jpg"
+                  alt="Aryabhatta Bhavan Campus"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
+                  <Layers className="w-3.5 h-3.5 text-[#06B6D4]" />
+                  <span>Research</span>
+                </div>
+              </motion.div>
+
+            </div>
+
+          </div>
+
         </div>
       </section>
 
-      {/* "HOW IT WORKS" SECTION */}
-      <section className="py-20 px-6 bg-white/80 backdrop-blur-sm border-b border-[#E8ECF3]">
+      {/* BOTTOM TRANSLUCENT FLOWING WAVES & EMBLEM */}
+      <div className="relative w-full overflow-hidden leading-none pt-4 pointer-events-none z-10">
+        <svg
+          viewBox="0 0 1440 160"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-24 sm:h-32 object-cover opacity-90"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,32 C280,120 450,-20 720,64 C990,148 1200,10 1440,48 L1440,160 L0,160 Z"
+            fill="url(#waveGradient1)"
+            fillOpacity="0.4"
+          />
+          <path
+            d="M0,64 C320,-30 600,110 960,32 C1200,-20 1360,80 1440,64 L1440,160 L0,160 Z"
+            fill="url(#waveGradient2)"
+            fillOpacity="0.6"
+          />
+          <defs>
+            <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#3B82F6" />
+              <stop offset="50%" stopColor="#60A5FA" />
+              <stop offset="100%" stopColor="#93C5FD" />
+            </linearGradient>
+            <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#2563EB" />
+              <stop offset="50%" stopColor="#3B82F6" />
+              <stop offset="100%" stopColor="#60A5FA" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Floating 3D Graduation Cap Icon & Footer Slogan Bar */}
+        <div className="absolute bottom-3 inset-x-0 flex items-center justify-between max-w-7xl mx-auto px-6">
+          <div className="text-xs font-bold tracking-widest text-[#1E293B] uppercase opacity-75">
+            VIGNAN'S &nbsp;|&nbsp; LEARN • INNOVATE • EXCEL
+          </div>
+
+          <div className="relative flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg border border-white flex items-center justify-center text-[#2563EB]">
+              <GraduationCap className="w-6 h-6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* HOW IT WORKS SECTION */}
+      <section id="how-it-works" className="py-20 px-6 bg-white/80 backdrop-blur-sm border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#6C63FF] bg-[#F0EEFF] px-3.5 py-1 rounded-full border border-[#E0DBFF]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#4F46E5] bg-[#F0EEFF] px-3.5 py-1 rounded-full border border-[#E0DBFF]">
               End-to-End Autonomous Pipeline
             </span>
-            <h2 className="text-3xl font-extrabold text-[#1E2333]" style={{ fontFamily: 'var(--font-heading)' }}>
+            <h2 className="text-3xl font-extrabold text-[#0F172A]">
               How the Academic Recovery Agent Works
             </h2>
             <p className="text-sm text-[#64748B]">
@@ -561,7 +586,7 @@ export default function PublicLandingPage() {
               <motion.div
                 key={idx}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className="glass-card glass-card-interactive p-6 rounded-2xl border border-[#E8ECF3] bg-white/90 shadow-md relative flex flex-col justify-between"
+                className="p-6 rounded-2xl border border-[#E2E8F0] bg-white shadow-md relative flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -580,7 +605,7 @@ export default function PublicLandingPage() {
                     {item.icon}
                   </div>
 
-                  <h3 className="text-base font-bold text-[#1E2333] mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+                  <h3 className="text-base font-bold text-[#0F172A] mb-2">
                     {item.title}
                   </h3>
                   <p className="text-xs text-[#64748B] leading-relaxed">
@@ -593,14 +618,14 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 5 SPECIALIZED AUTONOMOUS AGENTS */}
-      <section className="py-20 px-6">
+      {/* SPECIALIZED MULTI-AGENT MICROSERVICES */}
+      <section id="about" className="py-20 px-6">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#0284C7] bg-[#EAF6FF] px-3.5 py-1 rounded-full border border-[#BAE6FD]">
               Coordinated Architecture
             </span>
-            <h2 className="text-3xl font-extrabold text-[#1E2333]" style={{ fontFamily: 'var(--font-heading)' }}>
+            <h2 className="text-3xl font-extrabold text-[#0F172A]">
               Specialized Multi-Agent Microservices
             </h2>
             <p className="text-sm text-[#64748B]">
@@ -613,7 +638,7 @@ export default function PublicLandingPage() {
               <motion.div
                 key={idx}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="glass-card glass-card-interactive p-6 rounded-2xl border border-[#E8ECF3] bg-white/90 shadow-md space-y-4"
+                className="p-6 rounded-2xl border border-[#E2E8F0] bg-white shadow-md space-y-4"
               >
                 <div className="flex items-center justify-between">
                   <div
@@ -628,7 +653,7 @@ export default function PublicLandingPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold text-[#1E2333]" style={{ fontFamily: 'var(--font-heading)' }}>
+                  <h3 className="text-base font-bold text-[#0F172A]">
                     {agent.name}
                   </h3>
                   <p className="text-xs text-[#64748B] mt-1.5 leading-relaxed">
@@ -641,39 +666,39 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* ROLE WORKSTATION PORTALS */}
-      <section className="py-16 px-6 bg-white/90 border-t border-[#E8ECF3]">
+      {/* ROLE PORTALS & ACCESS */}
+      <section id="contact" className="py-16 px-6 bg-white border-t border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto text-center space-y-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2333]" style={{ fontFamily: 'var(--font-heading)' }}>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A]">
             Access Your Academic Portal
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
-            <Link href="/login?role=HOD" className="glass-card glass-card-interactive p-6 rounded-2xl border border-[#E8ECF3] bg-white hover:border-[#6C63FF] transition shadow-sm">
-              <div className="w-10 h-10 rounded-xl bg-[#F0EEFF] text-[#6C63FF] flex items-center justify-center mb-3">
+            <Link href="/login?role=HOD" className="p-6 rounded-2xl border border-[#E2E8F0] bg-white hover:border-[#4F46E5] transition shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-[#F0EEFF] text-[#4F46E5] flex items-center justify-center mb-3">
                 <ShieldAlert size={20} />
               </div>
-              <h3 className="font-bold text-base text-[#1E2333]">HOD Portal</h3>
+              <h3 className="font-bold text-base text-[#0F172A]">HOD Portal</h3>
               <p className="text-xs text-[#64748B] mt-1">
                 Department overview, AI recovery approval, and risk analytics.
               </p>
             </Link>
 
-            <Link href="/login?role=FACULTY" className="glass-card glass-card-interactive p-6 rounded-2xl border border-[#E8ECF3] bg-white hover:border-[#4FACFE] transition shadow-sm">
+            <Link href="/login?role=FACULTY" className="p-6 rounded-2xl border border-[#E2E8F0] bg-white hover:border-[#3B82F6] transition shadow-sm">
               <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] text-[#0284C7] flex items-center justify-center mb-3">
                 <UserCheck size={20} />
               </div>
-              <h3 className="font-bold text-base text-[#1E2333]">Faculty Portal</h3>
+              <h3 className="font-bold text-base text-[#0F172A]">Faculty Portal</h3>
               <p className="text-xs text-[#64748B] mt-1">
                 Class updates, attendance logging, and topic pace tracking.
               </p>
             </Link>
 
-            <Link href="/login?role=STUDENT" className="glass-card glass-card-interactive p-6 rounded-2xl border border-[#E8ECF3] bg-white hover:border-[#10B981] transition shadow-sm">
+            <Link href="/login?role=STUDENT" className="p-6 rounded-2xl border border-[#E2E8F0] bg-white hover:border-[#10B981] transition shadow-sm">
               <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] text-[#10B981] flex items-center justify-center mb-3">
                 <GraduationCap size={20} />
               </div>
-              <h3 className="font-bold text-base text-[#1E2333]">Student Portal</h3>
+              <h3 className="font-bold text-base text-[#0F172A]">Student Portal</h3>
               <p className="text-xs text-[#64748B] mt-1">
                 Course progress, remedial support timetable, and attendance alerts.
               </p>
@@ -682,15 +707,15 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* INSTITUTIONAL FOOTER */}
-      <footer className="py-8 px-6 border-t border-[#E8ECF3] bg-[#F8FAFC] text-center text-xs text-[#64748B]">
+      {/* FOOTER */}
+      <footer className="py-8 px-6 border-t border-[#E2E8F0] bg-[#F8FAFC] text-center text-xs text-[#64748B]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-[#1E2333]">Vignan's Foundation for Science, Technology & Research</span>
+            <span className="font-bold text-[#0F172A]">Vignan's Foundation for Science, Technology & Research</span>
             <span>• NAAC A+ Accredited</span>
           </div>
           <div>
-            Department of Computer Science & Engineering • AI Academic Recovery Agent v2.4
+            Department of Computer Science & Engineering • AI Academic Recovery Agent
           </div>
         </div>
       </footer>
