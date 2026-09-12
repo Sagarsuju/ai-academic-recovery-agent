@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   Sparkles,
@@ -116,7 +117,17 @@ const AGENTS = [
 ];
 
 export default function PublicLandingPage() {
-  const [isPlayingIntro, setIsPlayingIntro] = useState(true);
+  const [isPlayingIntro, setIsPlayingIntro] = useState(false);
+
+  // Safety timer: ensure intro video overlay auto-dismisses so page is never stuck on black screen
+  useEffect(() => {
+    if (isPlayingIntro) {
+      const timer = setTimeout(() => {
+        setIsPlayingIntro(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPlayingIntro]);
 
   // Parallax 3D mouse tilt motion values
   const mouseX = useMotionValue(0);
@@ -159,7 +170,7 @@ export default function PublicLandingPage() {
         }
       `}</style>
 
-      {/* Intro Video Fullscreen Overlay */}
+      {/* Intro Video Fullscreen Overlay (Auto-dismisses safely) */}
       {isPlayingIntro && (
         <div style={{
           position: 'fixed',
@@ -177,6 +188,7 @@ export default function PublicLandingPage() {
             muted
             playsInline
             onEnded={() => setIsPlayingIntro(false)}
+            onError={() => setIsPlayingIntro(false)}
             style={{
               width: '100vw',
               height: '100vh',
@@ -186,6 +198,7 @@ export default function PublicLandingPage() {
             <source src="/intro_video.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
+
 
           <button
             onClick={() => setIsPlayingIntro(false)}
