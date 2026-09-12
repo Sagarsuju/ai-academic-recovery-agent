@@ -503,54 +503,90 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* BOTTOM TRANSLUCENT FLOWING WAVES & EMBLEM */}
-      <div className="relative w-full overflow-hidden leading-none pt-4 pointer-events-none z-10">
-        <svg
-          viewBox="0 0 1440 160"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-24 sm:h-32 object-cover opacity-90"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,32 C280,120 450,-20 720,64 C990,148 1200,10 1440,48 L1440,160 L0,160 Z"
-            fill="url(#waveGradient1)"
-            fillOpacity="0.4"
-          />
-          <path
-            d="M0,64 C320,-30 600,110 960,32 C1200,-20 1360,80 1440,64 L1440,160 L0,160 Z"
-            fill="url(#waveGradient2)"
-            fillOpacity="0.6"
-          />
-          <defs>
-            <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3B82F6" />
-              <stop offset="50%" stopColor="#60A5FA" />
-              <stop offset="100%" stopColor="#93C5FD" />
-            </linearGradient>
-            <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#2563EB" />
-              <stop offset="50%" stopColor="#3B82F6" />
-              <stop offset="100%" stopColor="#60A5FA" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        {/* Floating 3D Graduation Cap Icon & Footer Slogan Bar */}
-        <div className="absolute bottom-3 inset-x-0 flex items-center justify-between max-w-7xl mx-auto px-6">
-          <div className="text-xs font-bold tracking-widest text-[#1E293B] uppercase opacity-75">
-            VIGNAN'S &nbsp;|&nbsp; LEARN • INNOVATE • EXCEL
+      {/* VIGNAN CAMPUS PHOTO GALLERY SHOWCASE */}
+      <section className="py-12 px-6 bg-gradient-to-b from-white to-[#F4F7FC] border-b border-[#E2E8F0] relative z-10">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#3B82F6] bg-[#EAF6FF] px-3.5 py-1 rounded-full border border-[#BAE6FD]">
+              Vignan University Infrastructure
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A]">
+              Our State-of-the-Art Campus Environment
+            </h2>
+            <p className="text-xs sm:text-sm text-[#64748B]">
+              Empowering students with world-class academic infrastructure, research facilities, and modern learning hubs.
+            </p>
           </div>
 
-          <div className="relative flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg border border-white flex items-center justify-center text-[#2563EB]">
-              <GraduationCap className="w-6 h-6" />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Campus Photo 1 */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              className="rounded-2xl overflow-hidden bg-white border border-[#E2E8F0] shadow-md hover:shadow-xl transition flex flex-col"
+            >
+              <div className="relative h-56 w-full overflow-hidden bg-[#F1F5F9]">
+                <img
+                  src="/campus/campus1.jpg"
+                  alt="Vignan Campus Courtyard"
+                  className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                />
+                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-[#3B82F6] shadow-sm flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#3B82F6]" /> Campus Life
+                </div>
+              </div>
+              <div className="p-4 space-y-1">
+                <h3 className="font-bold text-base text-[#0F172A]">Modern Academic Courtyard</h3>
+                <p className="text-xs text-[#64748B]">Spacious curved architectural design surrounded by lush greenery and vibrant student activities.</p>
+              </div>
+            </motion.div>
+
+            {/* Campus Photo 2 */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              className="rounded-2xl overflow-hidden bg-white border border-[#E2E8F0] shadow-md hover:shadow-xl transition flex flex-col"
+            >
+              <div className="relative h-56 w-full overflow-hidden bg-[#F1F5F9]">
+                <img
+                  src="/campus/campus2.jpg"
+                  alt="Vignan Foundation Building"
+                  className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                />
+                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-[#8B5CF6] shadow-sm flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 text-[#8B5CF6]" /> Knowledge & Admin
+                </div>
+              </div>
+              <div className="p-4 space-y-1">
+                <h3 className="font-bold text-base text-[#0F172A]">Vignan's Foundation Main Building</h3>
+                <p className="text-xs text-[#64748B]">Grand white administrative edifice housing university leadership, research labs, and academic departments.</p>
+              </div>
+            </motion.div>
+
+            {/* Campus Photo 3 */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              className="rounded-2xl overflow-hidden bg-white border border-[#E2E8F0] shadow-md hover:shadow-xl transition flex flex-col"
+            >
+              <div className="relative h-56 w-full overflow-hidden bg-[#F1F5F9]">
+                <img
+                  src="/campus/campus3.jpg"
+                  alt="I Love Vignan Building"
+                  className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                />
+                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-[#F59E0B] shadow-sm flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" /> Innovation Hub
+                </div>
+              </div>
+              <div className="p-4 space-y-1">
+                <h3 className="font-bold text-base text-[#0F172A]">I ❤️ VIGNAN Innovation Center</h3>
+                <p className="text-xs text-[#64748B]">Iconic campus landmark and engineering complex supporting multi-agent AI research and innovation.</p>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* HOW IT WORKS SECTION */}
+
       <section id="how-it-works" className="py-20 px-6 bg-white/80 backdrop-blur-sm border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
