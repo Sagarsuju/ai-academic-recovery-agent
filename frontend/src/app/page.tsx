@@ -253,9 +253,18 @@ export default function PublicLandingPage() {
             <img
               src="/logo.png"
               alt="Vignan's Foundation for Science, Technology and Research"
-              className="h-10 sm:h-12 w-auto object-contain max-w-[260px] sm:max-w-[380px]"
+              className="h-10 sm:h-14 w-auto object-contain max-w-[260px] sm:max-w-[380px]"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src.includes('logo.png')) {
+                  target.src = '/vignan_logo.png';
+                } else if (target.src.includes('vignan_logo.png')) {
+                  target.src = '/vignan.png';
+                }
+              }}
             />
           </Link>
+
 
           {/* Center Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#475569]">

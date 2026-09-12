@@ -113,7 +113,16 @@ function LoginContent() {
               src="/logo.png"
               alt="Vignan University Logo"
               className="h-10 sm:h-12 w-auto object-contain max-w-[280px]"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src.includes('logo.png')) {
+                  target.src = '/vignan_logo.png';
+                } else if (target.src.includes('vignan_logo.png')) {
+                  target.src = '/vignan.png';
+                }
+              }}
             />
+
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight mb-1">
