@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   Sparkles,
@@ -21,8 +22,16 @@ import {
   BookOpen,
   MapPin,
   Award,
-  Layers
+  Layers,
+  Box
 } from 'lucide-react';
+
+// Dynamic WebGL 3D Canvas Import with SSR safety
+const HeroNetworkScene = dynamic(() => import('../components/3d/HeroNetworkScene'), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-transparent" />
+});
+
 
 const HOW_IT_WORKS_STEPS = [
   {
@@ -109,13 +118,16 @@ const AGENTS = [
 export default function PublicLandingPage() {
   const [isPlayingIntro, setIsPlayingIntro] = useState(true);
 
-  // Parallax mouse movement handler
+  // Parallax 3D mouse tilt motion values
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 120 };
-  const parallaxXBg = useSpring(useTransform(mouseX, [-500, 500], [-8, 8]), springConfig);
-  const parallaxYBg = useSpring(useTransform(mouseY, [-500, 500], [-8, 8]), springConfig);
+  const springConfig = { damping: 30, stiffness: 100 };
+  const parallaxXBg = useSpring(useTransform(mouseX, [-600, 600], [-12, 12]), springConfig);
+  const parallaxYBg = useSpring(useTransform(mouseY, [-600, 600], [-12, 12]), springConfig);
+
+  const cardRotateX = useSpring(useTransform(mouseY, [-600, 600], [8, -8]), springConfig);
+  const cardRotateY = useSpring(useTransform(mouseX, [-600, 600], [-10, 10]), springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
@@ -127,13 +139,23 @@ export default function PublicLandingPage() {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className="min-h-screen text-[#1E2333] relative overflow-hidden bg-[#F4F7FC] font-sans"
+      className="min-h-screen text-[#1E2333] relative overflow-hidden bg-[#F4F7FC] font-sans selection:bg-[#3B82F6]/20"
+      style={{ perspective: 1200 }}
     >
-      {/* Google Font for Cursive Calligraphy Overlay */}
+      {/* Google Font for Cursive Calligraphy Overlay & 3D CSS Styles */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         .font-cursive {
           font-family: 'Caveat', cursive, sans-serif;
+        }
+        .preserve-3d {
+          transform-style: preserve-3d;
+        }
+        .card-3d-glow {
+          box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.25), 0 0 20px rgba(79, 70, 229, 0.1);
+        }
+        .text-glow-3d {
+          text-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
       `}</style>
 
@@ -193,6 +215,12 @@ export default function PublicLandingPage() {
           </button>
         </div>
       )}
+
+      {/* 3D WEBGL GRAPHICS BACKGROUND CANVAS */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
+        <HeroNetworkScene />
+      </div>
+
 
       {/* Ambient Radial Background Glows */}
       <motion.div
@@ -297,43 +325,56 @@ export default function PublicLandingPage() {
               </Link>
             </div>
 
-            {/* Stat Cards Horizontal Strip */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-[#E2E8F0]">
+            {/* 3D Stat Cards Horizontal Strip */}
+            <motion.div 
+              style={{ rotateX: cardRotateX, rotateY: cardRotateY }}
+              className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-6 border-t border-[#E2E8F0] preserve-3d"
+            >
               {/* Stat 1 */}
-              <div className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E2E8F0] shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#F0EEFF] flex items-center justify-center shrink-0">
+              <motion.div 
+                whileHover={{ scale: 1.05, z: 20 }}
+                className="p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#E2E8F0] card-3d-glow flex items-center gap-3 transition cursor-pointer"
+              >
+                <div className="w-11 h-11 rounded-2xl bg-[#F0EEFF] border border-[#E0DBFF] flex items-center justify-center shrink-0 shadow-inner">
                   <Database className="w-5 h-5 text-[#4F46E5]" />
                 </div>
                 <div>
-                  <div className="text-xl font-extrabold text-[#4F46E5]">100%</div>
+                  <div className="text-2xl font-extrabold text-[#4F46E5]">100%</div>
                   <div className="text-[11px] text-[#64748B] font-semibold">Offline ChromaDB RAG</div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Stat 2 */}
-              <div className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E2E8F0] shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] flex items-center justify-center shrink-0">
+              <motion.div 
+                whileHover={{ scale: 1.05, z: 20 }}
+                className="p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#E2E8F0] card-3d-glow flex items-center gap-3 transition cursor-pointer"
+              >
+                <div className="w-11 h-11 rounded-2xl bg-[#EAF6FF] border border-[#BAE6FD] flex items-center justify-center shrink-0 shadow-inner">
                   <Users className="w-5 h-5 text-[#0284C7]" />
                 </div>
                 <div>
-                  <div className="text-xl font-extrabold text-[#0284C7]">5 Agents</div>
+                  <div className="text-2xl font-extrabold text-[#0284C7]">5 Agents</div>
                   <div className="text-[11px] text-[#64748B] font-semibold">LangGraph Pipeline</div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Stat 3 */}
-              <div className="p-3.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E2E8F0] shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] flex items-center justify-center shrink-0">
+              <motion.div 
+                whileHover={{ scale: 1.05, z: 20 }}
+                className="p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#E2E8F0] card-3d-glow flex items-center gap-3 transition cursor-pointer"
+              >
+                <div className="w-11 h-11 rounded-2xl bg-[#ECFDF5] border border-[#A7F3D0] flex items-center justify-center shrink-0 shadow-inner">
                   <Calendar className="w-5 h-5 text-[#10B981]" />
                 </div>
                 <div>
-                  <div className="text-xl font-extrabold text-[#10B981]">0 Conflicts</div>
+                  <div className="text-2xl font-extrabold text-[#10B981]">0 Conflicts</div>
                   <div className="text-[11px] text-[#64748B] font-semibold">Timetable Allocator</div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
           </div>
+
 
           {/* RIGHT COLUMN: 3D Robot + Exactly the 3 Uploaded Campus Photos */}
           <div className="lg:col-span-6 relative min-h-[460px] sm:min-h-[520px] flex items-center justify-center">
