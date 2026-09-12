@@ -335,10 +335,10 @@ export default function PublicLandingPage() {
 
           </div>
 
-          {/* RIGHT COLUMN: 3D Robot + Organic Campus Photo Collage */}
+          {/* RIGHT COLUMN: 3D Robot + Exactly the 3 Uploaded Campus Photos */}
           <div className="lg:col-span-6 relative min-h-[460px] sm:min-h-[520px] flex items-center justify-center">
 
-            {/* Calligraphic Handwriting Quotes (Positioned around hero visual) */}
+            {/* Calligraphic Handwriting Quotes */}
             <div className="absolute top-2 left-6 z-30 font-cursive text-2xl text-[#3B82F6] font-bold opacity-80 pointer-events-none transform -rotate-6">
               Learn<br />Grow<br />Achieve
             </div>
@@ -445,17 +445,17 @@ export default function PublicLandingPage() {
               </div>
             </div>
 
-            {/* CAMPUS PHOTO COLLAGE (Curved Multi-Photo Organic Composition) */}
+            {/* DYNAMIC 3-PHOTO CAMPUS COLLAGE (Using user's exact uploaded photos) */}
             <div className="relative w-full h-[450px] max-w-[540px] ml-auto">
 
-              {/* Top-Right Large Photo: Campus Life (Courtyard) */}
+              {/* Photo 1 (Image 2): Campus Courtyard */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="absolute top-0 right-0 w-[62%] h-[50%] rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-white z-10"
+                whileHover={{ scale: 1.03 }}
+                className="absolute top-0 right-0 w-[65%] h-[56%] rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-white z-10"
               >
                 <img
-                  src="/campus/courtyard.jpg"
-                  alt="Vignan Campus Courtyard"
+                  src="/campus/campus1.jpg"
+                  alt="Vignan Campus Life Courtyard"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
@@ -464,13 +464,13 @@ export default function PublicLandingPage() {
                 </div>
               </motion.div>
 
-              {/* Top-Left Center Photo: Knowledge (Foundation Building) */}
+              {/* Photo 2 (Image 3): Vignan Foundation Main Building */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="absolute top-10 left-12 w-[52%] h-[42%] rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-white z-20"
+                whileHover={{ scale: 1.03 }}
+                className="absolute top-12 left-10 w-[55%] h-[46%] rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-white z-20"
               >
                 <img
-                  src="/campus/foundation.jpg"
+                  src="/campus/campus2.jpg"
                   alt="Vignan Foundation Building"
                   className="w-full h-full object-cover"
                 />
@@ -480,35 +480,19 @@ export default function PublicLandingPage() {
                 </div>
               </motion.div>
 
-              {/* Middle-Right Photo: Innovation (I Love Vignan) */}
+              {/* Photo 3 (Image 4): I Love Vignan Orange Building */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="absolute top-[42%] right-2 w-[48%] h-[38%] rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-white z-25"
+                whileHover={{ scale: 1.03 }}
+                className="absolute bottom-0 right-6 w-[62%] h-[50%] rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-white z-30"
               >
                 <img
-                  src="/campus/ilovevignan.jpg"
-                  alt="I Love Vignan Campus"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-                  <span>Innovation</span>
-                </div>
-              </motion.div>
-
-              {/* Bottom-Center Photo: Research (Aryabhatta Bhavan) */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="absolute bottom-0 left-20 w-[60%] h-[48%] rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-white z-30"
-              >
-                <img
-                  src="/campus/aryabhatta.jpg"
-                  alt="Aryabhatta Bhavan Campus"
+                  src="/campus/campus3.jpg"
+                  alt="I Love Vignan Campus Landmark"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-md border border-[#E2E8F0] flex items-center gap-1.5 text-xs font-bold text-[#1E293B]">
-                  <Layers className="w-3.5 h-3.5 text-[#06B6D4]" />
-                  <span>Research</span>
+                  <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>Innovation</span>
                 </div>
               </motion.div>
 
