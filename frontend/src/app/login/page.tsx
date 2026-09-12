@@ -1,18 +1,57 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { ShieldAlert, UserCheck, Lock, Mail, ArrowRight, Sparkles, GraduationCap, Settings, Cpu } from 'lucide-react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { ShieldAlert, UserCheck, Lock, Mail, ArrowRight, Sparkles, GraduationCap, Settings, Building2, CheckCircle2 } from 'lucide-react';
 import { Role } from '@/types';
 import RobotMascot from '@/components/ui/RobotMascot';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
-  const [role, setRole] = useState<Role>('HOD');
+  const searchParams = useSearchParams();
+  const initialRole = (searchParams.get('role') as Role) || 'HOD';
+
+  const [role, setRole] = useState<Role>(initialRole);
   const [email, setEmail] = useState('hod.cse@vignan.edu.in');
   const [password, setPassword] = useState('••••••••••••');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Sync role & default email when URL params change or role changes
+  useEffect(() => {
+    const paramRole = searchParams.get('role') as Role;
+    if (paramRole && ['HOD', 'FACULTY', 'STUDENT', 'ADMIN'].includes(paramRole)) {
+      setRole(paramRole);
+      updateDefaultEmail(paramRole);
+    }
+  }, [searchParams]);
+
+  const updateDefaultEmail = (selectedRole: Role) => {
+    if (selectedRole === 'HOD') setEmail('hod.cse@vignan.edu.in');
+    else if (selectedRole === 'FACULTY') setEmail('prof.ananya@vignan.edu.in');
+    else if (selectedRole === 'STUDENT') setEmail('kavya.cse23@vignan.edu.in');
+    else if (selectedRole === 'ADMIN') setEmail('admin.academic@vignan.edu.in');
+  };
+
+  const handleRoleSelect = (selectedRole: Role) => {
+    setRole(selectedRole);
+    updateDefaultEmail(selectedRole);
+  };
+
+  // 3D Parallax Mouse Tilt Physics
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 120 };
+  const rotateX = useSpring(useTransform(mouseY, [-400, 400], [10, -10]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-400, 400], [-10, 10]), springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set(clientX - innerWidth / 2);
+    mouseY.set(clientY - innerHeight / 2);
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,348 +74,177 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      width: '100vw',
-      backgroundColor: '#F7F9FC',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'relative',
-      overflow: 'hidden',
-      padding: '24px',
-      fontFamily: 'var(--font-sans)'
-    }}>
-      {/* 4 Large Blurred Pastel Gradient Blobs */}
-      {/* 1. Purple top-left */}
-      <div style={{
-        position: 'absolute',
-        top: '-120px',
-        left: '-100px',
-        width: '500px',
-        height: '500px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(167, 139, 250, 0.28) 0%, rgba(108, 99, 255, 0.08) 60%, transparent 80%)',
-        filter: 'blur(70px)',
-        pointerEvents: 'none'
-      }} />
+    <div
+      onMouseMove={handleMouseMove}
+      className="min-h-screen w-full relative overflow-hidden flex items-center justify-center p-4 sm:p-6 font-sans bg-[#0F172A]"
+      style={{ perspective: 1200 }}
+    >
+      {/* HIGH DEFINITION VIGNAN CAMPUS BACKGROUND PHOTO WITH GLASS OVERLAY */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <img
+          src="/campus/campus1.jpg"
+          alt="Vignan Campus Background"
+          className="w-full h-full object-cover filter brightness-[0.45] contrast-[1.1] scale-105 transform transition duration-1000"
+        />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#0F172A]/90 via-[#0F172A]/70 to-[#1E1B4B]/80 backdrop-blur-[4px]" />
+      </div>
 
-      {/* 2. Blue top-right */}
-      <div style={{
-        position: 'absolute',
-        top: '-80px',
-        right: '-80px',
-        width: '460px',
-        height: '460px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(79, 172, 254, 0.25) 0%, rgba(125, 211, 252, 0.08) 60%, transparent 80%)',
-        filter: 'blur(65px)',
-        pointerEvents: 'none'
-      }} />
+      {/* Floating Ambient Glowing Orbs */}
+      <div className="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+      <div className="absolute bottom-[-100px] right-[-100px] w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.3)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
-      {/* 3. Cyan bottom-left */}
-      <div style={{
-        position: 'absolute',
-        bottom: '-100px',
-        left: '10%',
-        width: '480px',
-        height: '480px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(147, 197, 253, 0.07) 60%, transparent 80%)',
-        filter: 'blur(70px)',
-        pointerEvents: 'none'
-      }} />
-
-      {/* 4. Green bottom-right */}
-      <div style={{
-        position: 'absolute',
-        bottom: '-120px',
-        right: '-100px',
-        width: '520px',
-        height: '520px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(52, 211, 153, 0.20) 0%, rgba(110, 231, 183, 0.06) 60%, transparent 80%)',
-        filter: 'blur(75px)',
-        pointerEvents: 'none'
-      }} />
-
-      {/* Faint Academic Geometric Grid Pattern Overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'linear-gradient(rgba(108, 99, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(108, 99, 255, 0.025) 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
-        pointerEvents: 'none'
-      }} />
-
-      {/* Login Card with Entrance Animation */}
+      {/* 3D INTERACTIVE GLASSMORPHISM LOGIN CARD */}
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        style={{ rotateX, rotateY }}
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-card"
-        style={{
-          width: '100%',
-          maxWidth: '500px',
-          padding: '40px 44px',
-          position: 'relative',
-          zIndex: 10,
-          background: 'rgba(255, 255, 255, 0.88)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          borderColor: 'rgba(255, 255, 255, 0.9)',
-          boxShadow: '0 20px 40px -15px rgba(108, 99, 255, 0.08), 0 0 0 1px rgba(232, 236, 243, 0.8)',
-          borderRadius: '20px'
-        }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full max-w-[510px] p-8 sm:p-10 rounded-3xl bg-white/90 backdrop-blur-2xl border border-white/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] transform-style-3d"
       >
-        {/* Animated 3D AI Robot Mascot Sitting on Top-Right Corner */}
-        <div style={{
-          position: 'absolute',
-          top: '-70px',
-          right: '-45px',
-          zIndex: 50
-        }}>
+        {/* Floating 3D AI Robot Mascot Sitting on Top Right */}
+        <div className="absolute -top-16 -right-8 z-50 pointer-events-none drop-shadow-2xl">
           <RobotMascot />
         </div>
 
-        {/* Branding & Header */}
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+        {/* Top University Branding Header */}
+        <div className="text-center mb-7">
+          <div className="inline-flex items-center justify-center gap-2 mb-3">
+            <img
+              src="/logo.png"
+              alt="Vignan University Logo"
+              className="h-10 sm:h-12 w-auto object-contain max-w-[280px]"
+            />
+          </div>
 
-          <h1 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1.75rem',
-            fontWeight: 800,
-            marginBottom: '6px',
-            color: 'var(--text-primary)',
-            letterSpacing: '-0.02em'
-          }}>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight mb-1">
             Academic Recovery Portal
           </h1>
 
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            fontSize: '0.8rem',
-            fontWeight: 600,
-            color: '#6C63FF',
-            background: '#F0EEFF',
-            padding: '4px 14px',
-            borderRadius: '999px',
-            border: '1px solid #E0DBFF'
-          }}>
-            <Sparkles size={14} color="#6C63FF" /> Department of Computer Science & Engineering
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2FF] border border-[#C7D2FE] text-xs font-bold text-[#4338CA] mt-1 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#4F46E5]" />
+            <span>Department of Computer Science & Engineering</span>
           </div>
         </div>
 
-        {/* Role Selector Tabs */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '8px',
-          background: '#F1F5F9',
-          padding: '6px',
-          borderRadius: '12px',
-          marginBottom: '24px'
-        }}>
+        {/* 3D Interactive Role Selector Grid */}
+        <div className="grid grid-cols-2 gap-2 bg-[#F1F5F9]/90 p-1.5 rounded-2xl mb-6 border border-[#E2E8F0] shadow-inner">
+          {/* HOD */}
           <button
             type="button"
-            onClick={() => {
-              setRole('HOD');
-              setEmail('hod.cse@vignan.edu.in');
-            }}
-            style={{
-              padding: '9px 10px',
-              borderRadius: '8px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              background: role === 'HOD' ? '#FFFFFF' : 'transparent',
-              color: role === 'HOD' ? '#6C63FF' : '#64748B',
-              boxShadow: role === 'HOD' ? '0 2px 8px rgba(108, 99, 255, 0.14)' : 'none',
-              transition: 'all 0.18s ease'
-            }}
+            onClick={() => handleRoleSelect('HOD')}
+            className={`py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              role === 'HOD'
+                ? 'bg-white text-[#4F46E5] shadow-md border border-[#C7D2FE]'
+                : 'text-[#64748B] hover:text-[#0F172A]'
+            }`}
           >
-            <ShieldAlert size={14} color={role === 'HOD' ? '#6C63FF' : '#64748B'} /> HOD Portal
+            <ShieldAlert className={`w-4 h-4 ${role === 'HOD' ? 'text-[#4F46E5]' : 'text-[#64748B]'}`} />
+            <span>HOD Portal</span>
           </button>
 
+          {/* FACULTY */}
           <button
             type="button"
-            onClick={() => {
-              setRole('FACULTY');
-              setEmail('prof.ananya@vignan.edu.in');
-            }}
-            style={{
-              padding: '9px 10px',
-              borderRadius: '8px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              background: role === 'FACULTY' ? '#FFFFFF' : 'transparent',
-              color: role === 'FACULTY' ? '#4FACFE' : '#64748B',
-              boxShadow: role === 'FACULTY' ? '0 2px 8px rgba(79, 172, 254, 0.15)' : 'none',
-              transition: 'all 0.18s ease'
-            }}
+            onClick={() => handleRoleSelect('FACULTY')}
+            className={`py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              role === 'FACULTY'
+                ? 'bg-white text-[#0284C7] shadow-md border border-[#BAE6FD]'
+                : 'text-[#64748B] hover:text-[#0F172A]'
+            }`}
           >
-            <UserCheck size={14} color={role === 'FACULTY' ? '#4FACFE' : '#64748B'} /> Faculty Portal
+            <UserCheck className={`w-4 h-4 ${role === 'FACULTY' ? 'text-[#0284C7]' : 'text-[#64748B]'}`} />
+            <span>Faculty Portal</span>
           </button>
 
+          {/* STUDENT */}
           <button
             type="button"
-            onClick={() => {
-              setRole('STUDENT');
-              setEmail('kavya.cse23@vignan.edu.in');
-            }}
-            style={{
-              padding: '9px 10px',
-              borderRadius: '8px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              background: role === 'STUDENT' ? '#FFFFFF' : 'transparent',
-              color: role === 'STUDENT' ? '#10B981' : '#64748B',
-              boxShadow: role === 'STUDENT' ? '0 2px 8px rgba(52, 211, 153, 0.15)' : 'none',
-              transition: 'all 0.18s ease'
-            }}
+            onClick={() => handleRoleSelect('STUDENT')}
+            className={`py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              role === 'STUDENT'
+                ? 'bg-white text-[#10B981] shadow-md border border-[#A7F3D0]'
+                : 'text-[#64748B] hover:text-[#0F172A]'
+            }`}
           >
-            <GraduationCap size={14} color={role === 'STUDENT' ? '#10B981' : '#64748B'} /> Student Portal
+            <GraduationCap className={`w-4 h-4 ${role === 'STUDENT' ? 'text-[#10B981]' : 'text-[#64748B]'}`} />
+            <span>Student Portal</span>
           </button>
 
+          {/* ADMIN */}
           <button
             type="button"
-            onClick={() => {
-              setRole('ADMIN');
-              setEmail('admin.academic@vignan.edu.in');
-            }}
-            style={{
-              padding: '9px 10px',
-              borderRadius: '8px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              background: role === 'ADMIN' ? '#FFFFFF' : 'transparent',
-              color: role === 'ADMIN' ? '#818CF8' : '#64748B',
-              boxShadow: role === 'ADMIN' ? '0 2px 8px rgba(129, 140, 248, 0.15)' : 'none',
-              transition: 'all 0.18s ease'
-            }}
+            onClick={() => handleRoleSelect('ADMIN')}
+            className={`py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              role === 'ADMIN'
+                ? 'bg-white text-[#8B5CF6] shadow-md border border-[#DDD6FE]'
+                : 'text-[#64748B] hover:text-[#0F172A]'
+            }`}
           >
-            <Settings size={14} color={role === 'ADMIN' ? '#818CF8' : '#64748B'} /> Admin Portal
+            <Settings className={`w-4 h-4 ${role === 'ADMIN' ? 'text-[#8B5CF6]' : 'text-[#64748B]'}`} />
+            <span>Admin Portal</span>
           </button>
         </div>
 
-        {/* Credentials Form */}
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+        {/* Interactive Form */}
+        <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.82rem',
-              fontWeight: 600,
-              color: 'var(--text-primary)',
-              marginBottom: '6px'
-            }}>
-              Institutional Email
+            <label className="block text-xs font-bold text-[#334155] mb-1.5">
+              Institutional Email Address
             </label>
-            <div style={{ position: 'relative' }}>
-              <Mail size={16} color="#94A3B8" style={{ position: 'absolute', left: '14px', top: '13px' }} />
+            <div className="relative">
+              <Mail className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-3.5" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '11px 14px 11px 42px',
-                  borderRadius: '10px',
-                  background: '#F8FAFC',
-                  border: '1px solid var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  transition: 'border-color 0.15s ease'
-                }}
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#CBD5E1] text-sm text-[#0F172A] font-medium focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition shadow-xs"
               />
             </div>
           </div>
 
           <div>
-            <label style={{
-              display: 'block',
-              fontSize: '0.82rem',
-              fontWeight: 600,
-              color: 'var(--text-primary)',
-              marginBottom: '6px'
-            }}>
+            <label className="block text-xs font-bold text-[#334155] mb-1.5">
               Password
             </label>
-            <div style={{ position: 'relative' }}>
-              <Lock size={16} color="#94A3B8" style={{ position: 'absolute', left: '14px', top: '13px' }} />
+            <div className="relative">
+              <Lock className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-3.5" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '11px 14px 11px 42px',
-                  borderRadius: '10px',
-                  background: '#F8FAFC',
-                  border: '1px solid var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  transition: 'border-color 0.15s ease'
-                }}
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#CBD5E1] text-sm text-[#0F172A] font-medium focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition shadow-xs"
               />
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="btn-primary gradient-btn"
             disabled={isLoading}
-            style={{
-              width: '100%',
-              padding: '13px',
-              fontSize: '0.95rem',
-              borderRadius: '10px',
-              marginTop: '6px'
-            }}
+            className="w-full py-3.5 px-6 rounded-xl text-white text-sm font-bold bg-gradient-to-r from-[#4F46E5] to-[#3B82F6] hover:from-[#4338CA] hover:to-[#2563EB] shadow-lg shadow-indigo-500/30 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-2"
           >
-            {isLoading ? 'Authenticating...' : `Enter ${role} Portal`} <ArrowRight size={17} />
+            <span>{isLoading ? 'Authenticating...' : `Sign In to ${role} Portal`}</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-
-
-        <div style={{
-          marginTop: '16px',
-          textAlign: 'center',
-          fontSize: '0.75rem',
-          color: 'var(--text-muted)'
-        }}>
-          Authorized access only • Vignan AI Academic Monitoring System v2.4
+        {/* Security Footer Note */}
+        <div className="mt-6 text-center text-[11px] font-semibold text-[#64748B] flex items-center justify-center gap-1.5">
+          <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+          <span>Vignan University Secure Single Sign-On (SSO) • v2.4</span>
         </div>
       </motion.div>
     </div>
   );
 }
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0F172A] flex items-center justify-center text-white">Loading Login Portal...</div>}>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
