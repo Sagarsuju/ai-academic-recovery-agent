@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   Sparkles,
   ArrowRight,
@@ -118,15 +118,49 @@ const AGENTS = [
 
 export default function PublicLandingPage() {
   const [isPlayingIntro, setIsPlayingIntro] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Safety timer: ensure intro video overlay auto-dismisses so page is never stuck on black screen
+  // Check sessionStorage on client mount: show intro once per browser session
   useEffect(() => {
-    if (isPlayingIntro) {
-      const timer = setTimeout(() => {
-        setIsPlayingIntro(false);
-      }, 4000);
-      return () => clearTimeout(timer);
+    try {
+      const hasSeenIntro = sessionStorage.getItem('vignan_intro_seen');
+      if (!hasSeenIntro) {
+        setIsPlayingIntro(true);
+        if (typeof document !== 'undefined') {
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    } catch {
+      setIsPlayingIntro(false);
     }
+  }, []);
+
+  // Dismiss intro and persist to sessionStorage for this session
+  const handleDismissIntro = () => {
+    setIsPlayingIntro(false);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+    try {
+      sessionStorage.setItem('vignan_intro_seen', 'true');
+    } catch {}
+  };
+
+  // Attempt video playback safely; if autoplay fails, auto-reveal landing page
+  useEffect(() => {
+    if (isPlayingIntro && videoRef.current) {
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          handleDismissIntro();
+        });
+      }
+    }
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+      }
+    };
   }, [isPlayingIntro]);
 
   // Parallax 3D mouse tilt motion values
@@ -170,64 +204,67 @@ export default function PublicLandingPage() {
         }
       `}</style>
 
-      {/* Intro Video Fullscreen Overlay (Auto-dismisses safely) */}
-      {isPlayingIntro && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 9999,
-          backgroundColor: '#0F172A',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden'
-        }}>
-          <video
-            autoPlay
-            muted
-            playsInline
-            onEnded={() => setIsPlayingIntro(false)}
-            onError={() => setIsPlayingIntro(false)}
+      {/* Full-Screen Introductory Video Overlay */}
+      <AnimatePresence>
+        {isPlayingIntro && (
+          <motion.div
+            key="vignan-intro-fullscreen"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{
+              opacity: 0,
+              scale: 1.03,
+              filter: 'blur(8px)',
+              transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }
+            }}
+            className="fixed inset-0 z-[99999] bg-[#020617] flex items-center justify-center overflow-hidden"
             style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 99999,
+              backgroundColor: '#020617',
               width: '100vw',
               height: '100vh',
-              objectFit: 'contain'
+              overflow: 'hidden'
             }}
           >
-            <source src="/intro_video.webm" type="video/webm" />
-            Your browser does not support the video tag.
-          </video>
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              preload="auto"
+              onEnded={handleDismissIntro}
+              onError={handleDismissIntro}
+              style={{
+                width: '100vw',
+                height: '100vh',
+                objectFit: 'cover'
+              }}
+              className="w-screen h-screen object-cover select-none pointer-events-none"
+            >
+              <source src="/intro.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
+            {/* Subtle cinematic gradient vignette at bottom */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-          <button
-            onClick={() => setIsPlayingIntro(false)}
-            style={{
-              position: 'absolute',
-              bottom: '32px',
-              right: '32px',
-              zIndex: 10000,
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(10px)',
-              color: '#FFFFFF',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              padding: '10px 20px',
-              borderRadius: '999px',
-              fontSize: '0.85rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            <span>Skip Intro</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-      )}
+            {/* Skip Intro Button */}
+            <button
+              type="button"
+              onClick={handleDismissIntro}
+              aria-label="Skip Intro"
+              className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-[100000] px-5 py-2.5 rounded-full bg-black/40 hover:bg-black/70 active:scale-95 text-white/90 hover:text-white border border-white/20 hover:border-white/50 backdrop-blur-md text-xs sm:text-sm font-semibold tracking-wide shadow-2xl transition-all duration-300 flex items-center gap-2 group cursor-pointer"
+            >
+              <span>Skip Intro</span>
+              <div className="w-5 h-5 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center transition-colors">
+                <ArrowRight className="w-3 h-3 text-white transition-transform group-hover:translate-x-0.5" />
+              </div>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 3D WEBGL GRAPHICS BACKGROUND CANVAS */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
